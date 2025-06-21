@@ -2,7 +2,7 @@
 - Project name: TurnBaseGame
 - Unity version: Unity 6000.1.8f1
 - Active game object:
-  - Name: PlayerPrefabBeta
+  - Name: Canvas
   - Tag: Untagged
-  - Layer: Default
+  - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

@@ -1,0 +1,33 @@
+{
+  "Username": "name",
+  "SaveSlot": 1,
+
+  "Inventory": [
+    "item1",
+    "item2"
+  ],
+  "Abilities": [
+    {
+      "name": "ability 1",
+        "other info": "idk"
+    },
+    {
+      "name": "ability 2",
+      "other info": "idk"
+    }
+  ],
+  "Stats": {
+    "Level": 0,
+    "Health": 0
+  },
+  "Effects": [
+    {
+      "name": "effect 1",
+      "duration": 0
+    },
+    {
+      "name": "effect 2",
+      "duration": 0
+    }
+  ]
+}
