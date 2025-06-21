@@ -12,13 +12,11 @@ public class ThirdPersonController : MonoBehaviour
     float jumpElapsedTime = 0;
     bool isJumping = false;
     bool isSprinting = false;
-    bool isCrouching = false;
 
     float inputHorizontal;
     float inputVertical;
     bool inputJump;
     bool inputSprint;
-    bool inputCrouch;
 
     Animator animator;
     CharacterController cc;
@@ -41,7 +39,7 @@ public class ThirdPersonController : MonoBehaviour
     void Start()
     {
         cc = GetComponent<CharacterController>();
-        scCamera = GetComponent<SideScrollerCamera>().Camera;
+        scCamera = GetComponent<SideScrollerCamera>().cam;
         animator = GetComponent<Animator>();
 
         if (animator == null)
@@ -54,15 +52,8 @@ public class ThirdPersonController : MonoBehaviour
         inputHorizontal = moveInput.x;
         inputVertical = moveInput.y;
 
-        if (inputCrouch)
-        {
-            isCrouching = !isCrouching;
-            inputCrouch = false; // reset toggle
-        }
-
         if (cc.isGrounded && animator != null)
         {
-            animator.SetBool("crouch", isCrouching);
             animator.SetBool("run", cc.velocity.magnitude > 0.9f);
             isSprinting = cc.velocity.magnitude > 0.9f && inputSprint;
             animator.SetBool("sprint", isSprinting);
@@ -82,9 +73,9 @@ public class ThirdPersonController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float velocityAdittion = isSprinting ? sprintAdittion : (isCrouching ? -velocity * 0.5f : 0);
-        float directionX = inputHorizontal * (velocity + velocityAdittion) * Time.deltaTime;
-        float directionZ = inputVertical * (velocity + velocityAdittion) * Time.deltaTime;
+        float velocityAdittion = isSprinting ? sprintAdittion : 0;
+        float directionX = inputHorizontal * (velocity + velocityAdittion) * Time.fixedDeltaTime;
+        float directionZ = inputVertical * (velocity + velocityAdittion) * Time.fixedDeltaTime;
         float directionY = 0;
 
         if (isJumping)

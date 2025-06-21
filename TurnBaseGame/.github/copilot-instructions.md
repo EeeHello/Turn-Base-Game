@@ -2,7 +2,7 @@
 - Project name: TurnBaseGame
 - Unity version: Unity 6000.1.8f1
 - Active game object:
-  - Name: ThirdPersonController
-  - Tag: Player
+  - Name: PlayerPrefabBeta
+  - Tag: Untagged
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
