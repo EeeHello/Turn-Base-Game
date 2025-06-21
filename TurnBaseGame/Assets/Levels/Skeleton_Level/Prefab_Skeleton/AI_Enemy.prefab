@@ -1332,10 +1332,11 @@ GameObject:
   - component: {fileID: 127867265787259768}
   - component: {fileID: 9010093450466925906}
   - component: {fileID: 567472913265698428}
-  - component: {fileID: 3786010428595199170}
+  - component: {fileID: 252278310625978001}
+  - component: {fileID: 1808544509678899370}
   m_Layer: 0
   m_Name: AI_Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1418,12 +1419,12 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
---- !u!65 &3786010428595199170
+--- !u!65 &252278310625978001
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1442,8 +1443,20 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 2.1252842, z: 0.33308667}
-  m_Center: {x: 0, y: 1.0442853, z: 0.022727191}
+  m_Size: {x: 1, y: 2.12943, z: 0.4683623}
+  m_Center: {x: 0, y: 1.0140435, z: 0.013179377}
+--- !u!114 &1808544509678899370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6660184903045082040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095e8f6f9f5755a4eb01ed175ab2be15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6906493944559020957
 GameObject:
   m_ObjectHideFlags: 0

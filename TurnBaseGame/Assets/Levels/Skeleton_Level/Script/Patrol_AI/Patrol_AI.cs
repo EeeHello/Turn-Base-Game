@@ -44,7 +44,14 @@ public class Patrol_AI : Node
             else
             {
                 transform.position = Vector3.MoveTowards(transform.position, wp.position, ZombieBT.speed * Time.deltaTime);
-                transform.LookAt(wp.position);
+                //transform. LookAt(wp.position);
+
+                Vector3 lookDirection = wp.position - transform.position;
+                lookDirection.y = 0f; ;
+                if (lookDirection != Vector3.zero)
+                {
+                    transform.rotation = Quaternion.LookRotation(lookDirection);
+                }
             }
         }
 
