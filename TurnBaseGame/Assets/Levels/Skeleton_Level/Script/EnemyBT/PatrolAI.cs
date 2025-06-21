@@ -4,7 +4,7 @@ using UnityEngine;
 
 using BehaviorTree;
 
-public class Patrol_AI : Node
+public class PatrolAI : Node
 {
     private Transform transform;
     private Transform[] waypoints;
@@ -15,7 +15,7 @@ public class Patrol_AI : Node
     private float waitCounter = 0f;
     private bool waiting = false;
 
-    public Patrol_AI(Transform transform, Transform[] waypoints)
+    public PatrolAI(Transform transform, Transform[] waypoints)
     {
         this.transform = transform;
         this.waypoints = waypoints;
