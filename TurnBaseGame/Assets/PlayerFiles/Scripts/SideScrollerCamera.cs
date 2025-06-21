@@ -10,7 +10,8 @@ public class SideScrollerCamera : MonoBehaviour
     private Transform camTransform;
     public Vector3 minBounds;
     public Vector3 maxBounds;
-    private void Awake()
+
+    private void Start()
     {
         camTransform = cam.transform;
     }
