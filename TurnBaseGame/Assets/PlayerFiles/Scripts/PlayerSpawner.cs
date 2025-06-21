@@ -1,9 +1,14 @@
+using NUnit.Framework;
 using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
 {
     public GameObject playerPrefab;
     public GameObject camPrefab;
+    public bool isInFightingScene;
+
+    public Transform[] playerPositions;
+    public Transform[] enemiesPositions;
 
     private void Start()
     {
@@ -23,8 +28,14 @@ public class PlayerSpawner : MonoBehaviour
             return;
         }
 
-        // Now spawn the player
-        GameObject playerObj = Instantiate(playerPrefab,new Vector3(0,10,0), Quaternion.identity);
+        GameObject playerObj;
+
+        //Now spawn the player
+        if (isInFightingScene)
+        {
+            playerObj = Instantiate(playerPrefab, playerPositions[0]);
+        }
+        else playerObj = Instantiate(playerPrefab,new Vector3(0,10,0), Quaternion.identity);
 
         // Assign the camera to the SideScrollerCamera script AFTER it's been instantiated
         SideScrollerCamera scCam = playerObj.GetComponent<SideScrollerCamera>();
