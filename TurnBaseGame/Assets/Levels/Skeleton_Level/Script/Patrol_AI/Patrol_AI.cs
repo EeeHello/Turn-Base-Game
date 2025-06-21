@@ -1,0 +1,55 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+using BehaviorTree;
+
+public class Patrol_AI : Node
+{
+    private Transform transform;
+    private Transform[] waypoints;
+
+    private int currentWaypointIndex = 0;
+
+    private float waitTime = 1f;
+    private float waitCounter = 0f;
+    private bool waiting = false;
+
+    public Patrol_AI(Transform transform, Transform[] waypoints)
+    {
+        this.transform = transform;
+        this.waypoints = waypoints;
+    }
+    public override NodeState Evaluate()
+    {
+        if (waiting)
+        {
+            waitCounter += Time.deltaTime;
+            if (waitCounter >= waitTime)
+            {
+                waiting = false;
+            }
+        }
+        else
+        {
+            Transform wp = waypoints[currentWaypointIndex];
+            if (Vector3.Distance(transform.position, wp.position) < 0.01f)
+            {
+                transform.position = wp.position;
+                waitCounter = 0f;
+                waiting = true;
+
+                currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, wp.position, ZombieBT.speed * Time.deltaTime);
+                transform.LookAt(wp.position);
+            }
+        }
+
+        state = NodeState.RUNNING;
+        return state;
+    }
+}
+
