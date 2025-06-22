@@ -766,7 +766,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   target: {fileID: 5073706658768941741}
-  offset: {x: -3, y: 2, z: -2}
+  offset: {x: -2.02, y: 1.52, z: -0.66}
   smoothSpeed: 2
   collisionCheckRadius: 1
   minBounds: {x: -1000, y: 0, z: -1000}
