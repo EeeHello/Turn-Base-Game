@@ -117,6 +117,13 @@ public class PlayerAccountManager : MonoBehaviour
         LoginPanel.SetActive(true);
     }
 
+    public void OnBackButtonClicked()
+    {
+        MainMenuPanel.SetActive(true);
+        NewUserPanel.SetActive(false);
+        LoginPanel.SetActive(false);
+    }
+
     public void CreateNewAccount()
     {
         string username = NewUsernameInput.text;
