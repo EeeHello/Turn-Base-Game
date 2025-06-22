@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
@@ -9,7 +10,8 @@ public class PlayerSpawner : MonoBehaviour
 
     public Transform[] playerPositions;
     public Transform[] enemiesPositions;
-    public GameObject[] enemies;
+    public GameObject enemyPrefab; // Assign this in the Inspector
+    public GameObject[] enemies;   // Filled dynamically before scene loads
 
     private void Start()
     {
@@ -52,18 +54,21 @@ public class PlayerSpawner : MonoBehaviour
             runtime.Initialize(PlayerDataCarrier.Instance.LoadedPlayerData);
         }
 
-        if (isInFightingScene && EnemyDataCarrier.Instance != null && EnemyDataCarrier.Instance.LoadedEnemyStats != null)
+        if (isInFightingScene && EnemyDataCarrier.Instance != null && EnemyDataCarrier.Instance.LoadedEnemyStatsList != null)
         {
-            GameObject enemyObj = Instantiate(enemies[0], enemiesPositions[0].position, Quaternion.identity);
-            EnemyRuntime enemyRuntime = enemyObj.GetComponent<EnemyRuntime>();
+            for (int i = 0; i < EnemyDataCarrier.Instance.LoadedEnemyStatsList.Count; i++)
+            {
+                GameObject enemyObj = Instantiate(enemyPrefab, enemiesPositions[i]);
+                EnemyRuntime enemyRuntime = enemyObj.GetComponent<EnemyRuntime>();
 
-            if (enemyRuntime != null)
-            {
-                enemyRuntime.Initialize(EnemyDataCarrier.Instance.LoadedEnemyStats);
-            }
-            else
-            {
-                Debug.LogWarning("No EnemyRuntime found on spawned enemy prefab.");
+                if (enemyRuntime != null)
+                {
+                    enemyRuntime.Initialize(EnemyDataCarrier.Instance.LoadedEnemyStatsList[i]);
+                }
+                else
+                {
+                    Debug.LogWarning("No EnemyRuntime found on spawned enemy prefab.");
+                }
             }
         }
     }

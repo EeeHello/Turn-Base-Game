@@ -1,4 +1,5 @@
 using BehaviorTree;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -58,17 +59,62 @@ public class CheckPlayerInFOVRange : Node
                 return;
             }
 
-            EnemyRuntime enemyRuntime = transform.GetComponent<EnemyRuntime>();
-            if (enemyRuntime == null)
+            GameObject spawnerObj = GameObject.FindObjectOfType<PlayerSpawner>()?.gameObject;
+            if (spawnerObj == null)
             {
-                Debug.LogError("EnemyRuntime missing on enemy.");
+                Debug.LogError("PlayerSpawner not found in the scene!");
                 return;
             }
 
-            // Save enemy's stats
-            EnemyDataCarrier.Instance.LoadedEnemyStats = enemyRuntime.stats;
+            PlayerSpawner spawner = spawnerObj.GetComponent<PlayerSpawner>();
+            if (spawner == null || spawner.enemyPrefab == null)
+            {
+                Debug.LogError("PlayerSpawner missing or enemyPrefab not assigned.");
+                return;
+            }
 
-            // Load the fight scene
+            float searchRadius = 5f;
+            Collider[] nearbyColliders = Physics.OverlapSphere(player.transform.position, searchRadius);
+
+            List<Stats> selectedEnemyStats = new List<Stats>();
+            List<GameObject> selectedEnemyPrefabs = new List<GameObject>();
+
+            EnemyRuntime thisEnemy = transform.GetComponent<EnemyRuntime>();
+            if (thisEnemy != null)
+            {
+                selectedEnemyStats.Add(thisEnemy.stats);
+
+                GameObject enemyClone = GameObject.Instantiate(spawner.enemyPrefab);
+                enemyClone.GetComponent<EnemyRuntime>()?.Initialize(thisEnemy.stats);
+                selectedEnemyPrefabs.Add(enemyClone);
+            }
+            else
+            {
+                Debug.LogError("EnemyRuntime missing on the colliding enemy.");
+                return;
+            }
+
+            foreach (var col in nearbyColliders)
+            {
+                if (selectedEnemyStats.Count >= 3) break;
+
+                if (col.gameObject != transform.gameObject)
+                {
+                    EnemyRuntime nearbyEnemy = col.GetComponent<EnemyRuntime>();
+                    if (nearbyEnemy != null)
+                    {
+                        selectedEnemyStats.Add(nearbyEnemy.stats);
+
+                        GameObject enemyClone = GameObject.Instantiate(spawner.enemyPrefab);
+                        enemyClone.GetComponent<EnemyRuntime>()?.Initialize(nearbyEnemy.stats);
+                        selectedEnemyPrefabs.Add(enemyClone);
+                    }
+                }
+            }
+
+            EnemyDataCarrier.Instance.LoadedEnemyStatsList = selectedEnemyStats;
+            spawner.enemies = selectedEnemyPrefabs.ToArray();
+
             SceneManager.LoadScene("FightingTestScene");
         }
     }

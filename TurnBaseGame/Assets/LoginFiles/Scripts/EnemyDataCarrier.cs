@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyDataCarrier : MonoBehaviour
 {
     public static EnemyDataCarrier Instance;
 
-    public Stats LoadedEnemyStats;
+    public List<Stats> LoadedEnemyStatsList = new List<Stats>();
 
     private void Awake()
     {
