@@ -9,6 +9,7 @@ public class PlayerSpawner : MonoBehaviour
 
     public Transform[] playerPositions;
     public Transform[] enemiesPositions;
+    public GameObject[] enemies;
 
     private void Start()
     {
@@ -35,7 +36,7 @@ public class PlayerSpawner : MonoBehaviour
         {
             playerObj = Instantiate(playerPrefab, playerPositions[0]);
         }
-        else playerObj = Instantiate(playerPrefab,new Vector3(0,10,0), Quaternion.identity);
+        else playerObj = Instantiate(playerPrefab, new Vector3(0, 10, 0), Quaternion.identity);
 
         // Assign the camera to the SideScrollerCamera script AFTER it's been instantiated
         SideScrollerCamera scCam = playerObj.GetComponent<SideScrollerCamera>();
@@ -49,6 +50,21 @@ public class PlayerSpawner : MonoBehaviour
         if (runtime != null)
         {
             runtime.Initialize(PlayerDataCarrier.Instance.LoadedPlayerData);
+        }
+
+        if (isInFightingScene && EnemyDataCarrier.Instance != null && EnemyDataCarrier.Instance.LoadedEnemyStats != null)
+        {
+            GameObject enemyObj = Instantiate(enemies[0], enemiesPositions[0].position, Quaternion.identity);
+            EnemyRuntime enemyRuntime = enemyObj.GetComponent<EnemyRuntime>();
+
+            if (enemyRuntime != null)
+            {
+                enemyRuntime.Initialize(EnemyDataCarrier.Instance.LoadedEnemyStats);
+            }
+            else
+            {
+                Debug.LogWarning("No EnemyRuntime found on spawned enemy prefab.");
+            }
         }
     }
 }

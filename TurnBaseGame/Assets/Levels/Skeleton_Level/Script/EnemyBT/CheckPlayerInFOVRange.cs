@@ -48,13 +48,27 @@ public class CheckPlayerInFOVRange : Node
         {
             if (PlayerDataCarrier.Instance == null)
             {
-                Debug.LogError("PlayerDataCarrier not found in scene!");
+                Debug.LogError("PlayerDataCarrier not found!");
                 return;
             }
 
-            //PlayerDataCarrier.Instance.LoadedPlayerData = player;
+            if (EnemyDataCarrier.Instance == null)
+            {
+                Debug.LogError("EnemyDataCarrier not found!");
+                return;
+            }
 
-            // Load the gameplay scene
+            EnemyRuntime enemyRuntime = transform.GetComponent<EnemyRuntime>();
+            if (enemyRuntime == null)
+            {
+                Debug.LogError("EnemyRuntime missing on enemy.");
+                return;
+            }
+
+            // Save enemy's stats
+            EnemyDataCarrier.Instance.LoadedEnemyStats = enemyRuntime.stats;
+
+            // Load the fight scene
             SceneManager.LoadScene("FightingTestScene");
         }
     }
