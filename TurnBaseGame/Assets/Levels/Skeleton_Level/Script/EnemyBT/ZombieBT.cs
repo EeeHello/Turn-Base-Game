@@ -5,8 +5,9 @@ public class ZombieBT : Tree
 {
     public UnityEngine.Transform[] waypoints;
 
-    public static float speed = 5f;
+    public static float speed = 2f;
     public static float fovRange = 6f;
+    public string currentState;
 
     protected override Node SetupTree()
     {
@@ -17,6 +18,7 @@ public class ZombieBT : Tree
                 new CheckPlayerInFOVRange(transform),
                 new TaskGoToTarget(transform),
             }),
+            new InvestigatePosition(transform),
             new PatrolAI(transform, waypoints)
         });
         return root;
