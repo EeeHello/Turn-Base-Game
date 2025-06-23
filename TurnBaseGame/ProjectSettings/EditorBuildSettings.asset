@@ -8,15 +8,18 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
-    path: Assets/Scenes/LoginTestScene.unity
-    guid: 69d2340908e9e5447a311b66ed0525f6
   - enabled: 0
     path: Assets/Scenes/Player-Testing-Scene.unity
     guid: 6fd3a61a13242574094f47a97f00d508
-  - enabled: 1
+  - enabled: 0
     path: Assets/Levels/Skeleton_Level/PlayGround_1.unity
     guid: 669377f04c561244b800f94522042e4a
+  - enabled: 1
+    path: Assets/Levels/LoginScene.unity
+    guid: 69d2340908e9e5447a311b66ed0525f6
+  - enabled: 1
+    path: Assets/Levels/Level_1.unity
+    guid: ec5cb6c83f90b024bbbe3ae20097de19
   - enabled: 1
     path: Assets/Scenes/FightingTestScene.unity
     guid: dbc867eedf7bb0b43a0a373d4bad4d7f

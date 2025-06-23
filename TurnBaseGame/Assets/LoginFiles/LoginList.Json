@@ -1,2 +1,9 @@
 {
+    "accounts": [
+        {
+            "Username": "123",
+            "Password": "123",
+            "SaveSlotCount": 1
+        }
+    ]
 }

@@ -1022,7 +1022,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1856309524659998641, guid: c46c222b6fd17b24db965cf039c333fd, type: 3}
       propertyPath: gameSceneName
-      value: PlayGround_1
+      value: Level_1
       objectReference: {fileID: 0}
     - target: {fileID: 3806905619890465393, guid: c46c222b6fd17b24db965cf039c333fd, type: 3}
       propertyPath: m_IsActive
@@ -1150,9 +1150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c4b8dff90a463041bbc51b4c57ab8d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadedEnemyStats:
-    Level: 0
-    Health: 0
+  LoadedEnemyStatsList: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
