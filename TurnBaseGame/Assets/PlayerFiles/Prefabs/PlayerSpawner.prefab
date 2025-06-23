@@ -46,3 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 7824155768676534005, guid: 17221e5915791df4a85aae24298d3e28, type: 3}
   camPrefab: {fileID: 5032051750986236486, guid: cfc8a000bd9353440b38f2a6ba3bba97, type: 3}
+  isInFightingScene: 0
+  playerPositions: []
+  enemiesPositions: []
+  enemyPrefab: {fileID: 2108980312443089387, guid: a6e58800b7979b543ad1ca66947c1d4c, type: 3}
+  enemies: []

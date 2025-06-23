@@ -1,0 +1,11 @@
+{
+    "Username": "123",
+    "SaveSlot": 1,
+    "Inventory": [],
+    "Abilities": [],
+    "Stats": {
+        "Level": 1,
+        "Health": 10
+    },
+    "Effects": []
+}

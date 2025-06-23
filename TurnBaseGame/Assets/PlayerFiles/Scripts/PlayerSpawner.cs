@@ -38,7 +38,7 @@ public class PlayerSpawner : MonoBehaviour
         {
             playerObj = Instantiate(playerPrefab, playerPositions[0]);
         }
-        else playerObj = Instantiate(playerPrefab, new Vector3(0, 10, 0), Quaternion.identity);
+        else playerObj = Instantiate(playerPrefab, transform.position, Quaternion.identity);
 
         // Assign the camera to the SideScrollerCamera script AFTER it's been instantiated
         SideScrollerCamera scCam = playerObj.GetComponent<SideScrollerCamera>();
