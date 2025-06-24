@@ -57,7 +57,6 @@ public class PatrolAI : Node
 
         state = NodeState.RUNNING;
         Debug.Log($"[BT] InvestigatePosition: {state}");
-        ((ZombieBT)transform.GetComponent<ZombieBT>()).currentState = "Patrolling";
         return state;
     }
 }
