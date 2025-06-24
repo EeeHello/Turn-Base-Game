@@ -41,7 +41,7 @@ public class InvestigatePosition : Node
 
         if(!arrived)
         {
-            if (Vector3.Distance(transform.position, lastKnownPosition) > 1.0f)
+            if (Vector3.Distance(transform.position, lastKnownPosition) > 0.4f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, lastKnownPosition, ZombieBT.speed * Time.deltaTime);
 
