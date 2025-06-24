@@ -9,15 +9,14 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public float alphaThreshold = 0.1f;
     private bool isHovering = false;
     public int scrollIndex = 1;
-    private string originalText;
-
-    public TMPro.TextMeshProUGUI buttonText;
-
+    private Vector2 hoverPosition;
+    private Vector2 originalPosition;
+    public Vector2 hoverOffset;
     private void Start()
     {
         GetComponent<Image>().alphaHitTestMinimumThreshold = alphaThreshold;
-        buttonText = GetComponentInChildren<TMPro.TextMeshProUGUI>();
-        originalText = buttonText.text;
+        originalPosition = transform.position;
+        hoverPosition = originalPosition - hoverOffset;
     }
 
     private void Update()
@@ -37,7 +36,6 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
             if (scrollIndex > 3) scrollIndex = 1;
             if (scrollIndex < 1) scrollIndex = 3;
 
-            buttonText.text = "\n" + scrollIndex.ToString();
 
         }
     }
@@ -45,12 +43,16 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public void OnPointerEnter(PointerEventData eventData)
     {
         isHovering = true;
-        buttonText.text = "\n" + scrollIndex.ToString();
+        transform.localScale = new Vector3(2, 13.333334f, 2);
+        transform.position = hoverPosition ;
+;
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+public void OnPointerExit(PointerEventData eventData)
     {
         isHovering = false;
-        buttonText.text = originalText;
+        transform.localScale = new Vector3(1.5f, 10, 1.5f);
+        transform.position = originalPosition;
+        
     }
 }
