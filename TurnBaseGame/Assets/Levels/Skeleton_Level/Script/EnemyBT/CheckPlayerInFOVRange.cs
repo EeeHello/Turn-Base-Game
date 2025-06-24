@@ -31,7 +31,7 @@ public class CheckPlayerInFOVRange : Node
 
         if (distance <= ZombieBT.fovRange)
         {
-            parent.parent.SetData("target", player.transform);
+            parent.parent.SetData("lastKnownPosition", player.transform.position);
             animator.SetBool("Walking", true);
             state = NodeState.SUCCESS;
             HandleCollisionWithPlayer(distance, player);

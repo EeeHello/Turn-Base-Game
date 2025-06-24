@@ -56,6 +56,7 @@ public class PatrolAI : Node
         }
 
         state = NodeState.RUNNING;
+        Debug.Log($"[BT] InvestigatePosition: {state}");
         return state;
     }
 }
