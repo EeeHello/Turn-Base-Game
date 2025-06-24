@@ -20,8 +20,19 @@ public class HandleButtonPress : MonoBehaviour
         
     }
 
-    public void Onbuttonpåressdd()
+    public void OnbasicActionPressed()
     {
-        
+        int button = basicAction.GetComponent<HoverScrollButton>().scrollIndex;
+        Debug.Log("Pressed Basic Action " + button);
+    }
+    public void OnskillActionPressed()
+    {
+        int button = skillAction.GetComponent<HoverScrollButton>().scrollIndex;
+        Debug.Log("Pressed Skill Action " + button);
+    }
+    public void OnburstActionPressed()
+    {
+        int button = burstAction.GetComponent<HoverScrollButton>().scrollIndex;
+        Debug.Log("Pressed Burst Action " + button);
     }
 }

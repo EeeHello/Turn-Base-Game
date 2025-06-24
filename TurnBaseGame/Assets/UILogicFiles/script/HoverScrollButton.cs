@@ -2,40 +2,55 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using Unity.VisualScripting;
+using TMPro;
 
 public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public bool isHovering = false;
     public float alphaThreshold = 0.1f;
+    private bool isHovering = false;
+    public int scrollIndex = 1;
+    private string originalText;
 
-    public void Start()
+    public TMPro.TextMeshProUGUI buttonText;
+
+    private void Start()
     {
         GetComponent<Image>().alphaHitTestMinimumThreshold = alphaThreshold;
+        buttonText = GetComponentInChildren<TMPro.TextMeshProUGUI>();
+        originalText = buttonText.text;
     }
-    void Update()
+
+    private void Update()
     {
+        if (!isHovering) return;
 
-        if (isHovering)
+        float scroll = Mouse.current.scroll.ReadValue().y;
+
+        if (Mathf.Abs(scroll) > 0.1f)
         {
-            Debug.Log("Mouse is hovering over the button.");
+            if (scroll > 0)
+                scrollIndex++;
+            else
+                scrollIndex--;
 
-            float scroll = Mouse.current.scroll.ReadValue().y;
+            // Loop scrollIndex between 1 and 3
+            if (scrollIndex > 3) scrollIndex = 1;
+            if (scrollIndex < 1) scrollIndex = 3;
 
-            if (Mathf.Abs(scroll) > 0.1f)
-            {
-                Debug.Log("Scroll wheel used while hovering: " + scroll);
-            }
+            buttonText.text = "\n" + scrollIndex.ToString();
+
         }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         isHovering = true;
+        buttonText.text = "\n" + scrollIndex.ToString();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         isHovering = false;
+        buttonText.text = originalText;
     }
 }
