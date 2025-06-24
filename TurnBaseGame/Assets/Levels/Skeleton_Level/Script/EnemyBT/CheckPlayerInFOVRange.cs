@@ -22,6 +22,7 @@ public class CheckPlayerInFOVRange : Node
         {
             Debug.LogWarning("Player with tag 'Player' not found!");
             state = NodeState.FAILURE;
+            Debug.Log($"[BT] InvestigatePosition: {state}");
             return state;
         }
 
@@ -35,11 +36,14 @@ public class CheckPlayerInFOVRange : Node
             animator.SetBool("Walking", true);
             state = NodeState.SUCCESS;
             HandleCollisionWithPlayer(distance, player);
+            Debug.Log($"[BT] InvestigatePosition: {state}");
             return state;
         }
 
 
         state = NodeState.FAILURE;
+        Debug.Log($"[BT] InvestigatePosition: {state}");
+        ((ZombieBT)transform.GetComponent<ZombieBT>()).currentState = "Chasing";
         return state;
     }
 
