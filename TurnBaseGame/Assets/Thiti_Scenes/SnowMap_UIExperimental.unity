@@ -233,6 +233,10 @@ PrefabInstance:
       value: AI_Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 9010093450466925906, guid: 3d3af087c5fc6164d9e6ebf2cec5c249, type: 3}
+      propertyPath: investigationChance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010093450466925906, guid: 3d3af087c5fc6164d9e6ebf2cec5c249, type: 3}
       propertyPath: 'waypoints.Array.data[0]'
       value: 
       objectReference: {fileID: 1812508263}

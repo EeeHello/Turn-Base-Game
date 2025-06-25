@@ -9,6 +9,9 @@ public class ZombieBT : Tree
     public static float fovRange = 6f;
     public string currentState;
 
+    public float investigationChance;
+    public float agressionLevel = 0.75f;
+
     protected override Node SetupTree()
     {
         Node root = new Selector(new List<Node>
@@ -18,7 +21,13 @@ public class ZombieBT : Tree
                 new CheckPlayerInFOVRange(transform),
                 new TaskGoToTarget(transform),
             }),
-            new InvestigatePosition(transform),
+
+            new Sequence(new List<Node>
+            {
+                new RandomChanceNode(investigationChance),
+                new InvestigatePosition(transform),
+            }),
+
             new PatrolAI(transform, waypoints)
         });
         return root;
