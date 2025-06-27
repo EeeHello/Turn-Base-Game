@@ -849,7 +849,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 4365924982754014028}
-  timeDilation: 0.8
+  skillAnimationPositions: []
 --- !u!1 &2986874553486528815
 GameObject:
   m_ObjectHideFlags: 0
