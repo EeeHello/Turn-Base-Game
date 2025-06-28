@@ -11,9 +11,14 @@ public class PatrolAI : Node
 
     private int currentWaypointIndex = 0;
 
-    private float waitTime = 1f;
+    private float waitTime = Random.Range(2f, 4f);
     private float waitCounter = 0f;
     private bool waiting = false;
+
+    private float idleTimer = 0f;
+    private float idleDurantion = 2f;
+    private bool isIdling = false;
+    private string currentIdle = " ";
 
     public PatrolAI(Transform transform, Transform[] waypoints)
     {
@@ -24,6 +29,24 @@ public class PatrolAI : Node
     {
         if (waiting)
         {
+            if (!isIdling)
+            {
+                int idleIndex = Random.Range(0, 3);
+                switch (idleIndex)
+                {
+                    case 0: currentIdle = "Looking around...";
+                        break;
+
+                    case 1: currentIdle = "Scratching head...";
+                        break;
+
+                    case 2: currentIdle = "Stretching...";
+                        break;
+                }
+                Debug.Log($"[PatrolAI] {transform.name} is idling: {currentIdle}");
+                isIdling = true;
+            }
+
             waitCounter += Time.deltaTime;
             if (waitCounter >= waitTime)
             {
