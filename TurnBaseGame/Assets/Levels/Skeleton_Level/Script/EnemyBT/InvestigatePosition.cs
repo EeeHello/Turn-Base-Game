@@ -8,7 +8,7 @@ public class InvestigatePosition : Node
 {
     private Transform transform;
 
-    private float investigationTime = 10f;
+    private float investigationTime = 4f;
     private float timer = 0f;
     private bool arrived = false;
 

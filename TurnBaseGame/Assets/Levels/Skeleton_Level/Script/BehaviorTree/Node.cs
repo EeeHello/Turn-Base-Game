@@ -26,7 +26,7 @@ namespace BehaviorTree
         {
             foreach (Node child in children) 
             {
-                Attach(child);
+                AddChild(child);
             }
         }
 
@@ -77,6 +77,12 @@ namespace BehaviorTree
                 node = node.parent;
             }
             return false;
+        }
+
+        protected void AddChild(Node child)
+        {
+            child.parent = this;
+            children.Add(child);
         }
     }
 }
