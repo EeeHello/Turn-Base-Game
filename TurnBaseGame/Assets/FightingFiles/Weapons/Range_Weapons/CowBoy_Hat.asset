@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 341001e6dccd84842ab4532eff05d2be, type: 3}
+  m_Name: CowBoy_Hat
+  m_EditorClassIdentifier: 
+  weaponName: CowBoy Hat
+  type: 1
+  basicActions:
+  - action: {fileID: 11400000, guid: 69a9ef814932f574f989abb4a11dab40, type: 2}
+    requiredTrust: 0
+  - action: {fileID: 11400000, guid: bd2f72be90484d940a892de1924ee81d, type: 2}
+    requiredTrust: 0.291
+  - action: {fileID: 11400000, guid: ef65fcdf6266ac8478a83f517f2092f9, type: 2}
+    requiredTrust: 0.641
+  skillActions:
+  - action: {fileID: 11400000, guid: e61c5ec948f606946b85840144d45024, type: 2}
+    requiredTrust: 0
+  - action: {fileID: 11400000, guid: 2acb6f27e032e8143ad9444b9862322d, type: 2}
+    requiredTrust: 0.328
+  - action: {fileID: 11400000, guid: 493977aefbffe1e499b1181440636643, type: 2}
+    requiredTrust: 0.741
+  baseBurst: {fileID: 11400000, guid: 828ecd8c2abda0245a5d5816b5a0b71b, type: 2}
+  maxTrustBurst: {fileID: 11400000, guid: cd70cd70e39ee8b41941b8f5ba8f56d4, type: 2}
