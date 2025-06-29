@@ -556,6 +556,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9010093450466925906, guid: 3d3af087c5fc6164d9e6ebf2cec5c249, type: 3}
+      propertyPath: investigationChance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010093450466925906, guid: 3d3af087c5fc6164d9e6ebf2cec5c249, type: 3}
       propertyPath: waypoints.Array.size
       value: 1
       objectReference: {fileID: 0}
