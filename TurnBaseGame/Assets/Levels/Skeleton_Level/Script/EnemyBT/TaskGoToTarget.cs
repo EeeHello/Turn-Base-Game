@@ -23,17 +23,25 @@ public class TaskGoToTarget : Node
             return state;
         }
 
-        if (Vector3.Distance(transform.position, target.position) > 0.01f)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, target.position, ZombieBT.speed * Time.deltaTime);
-            //transform. LookAt(target.position);
+        Vector3 direction = (target.position - transform.position).normalized;
+        direction.y = 0f;
 
-            Vector3 lookDirection = target.position - transform.position;
-            lookDirection.y = 0f; ;
-            if (lookDirection != Vector3.zero)
-            {
-                transform.rotation = Quaternion.LookRotation(lookDirection);
-            }
+        // Check for obstacle and adjust direction if needed
+        if (ObstacleDetector.IsObstacleForward(transform))
+        {
+            //direction = ObstacleDetector.GetAvoidanceDirection(transform);
+            direction = ObstacleDetector.GetAvoidanceDirection(transform);
+            Debug.Log($"[TaskGoToTarget] Avoiding obstacle, new direction: {direction}");
+        }
+
+        // Movement
+        transform.position += direction * ZombieBT.speed * Time.deltaTime;
+
+        // Rotation
+        if (direction != Vector3.zero)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 360f * Time.deltaTime);
         }
 
         state = NodeState.RUNNING;

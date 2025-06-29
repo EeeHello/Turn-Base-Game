@@ -26,6 +26,9 @@ public class PatrolAI : Node
     private bool isRotating = false;
     private float rotationDirection = 1f;
     private float rotationSpeed = 45f;
+
+    private float raycastDistance = 1.0f;
+
     public PatrolAI(Transform transform, Transform[] waypoints)
     {
         this.transform = transform;
@@ -86,18 +89,48 @@ public class PatrolAI : Node
         {
             transform.position = wp.position;
             waitCounter = 0f;
-            waitTime = Random.Range(2f, 4f);
+            waitTime = Random.Range(20f, 40f);
             PickRandomIdle();
             waiting = true;
         }
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, wp.position, ZombieBT.speed * Time.deltaTime);
-            Vector3 lookDirection = wp.position - transform.position;
-            lookDirection.y = 0f;
-            if (lookDirection != Vector3.zero)
+            //transform.position = Vector3.MoveTowards(transform.position, wp.position, ZombieBT.speed * Time.deltaTime);
+
+            Vector3 directionToWP = (wp.position - transform.position).normalized;
+
+            // Check for obstacles
+            bool forwardBlocked = ObstacleDetector.IsObstacleInDirection(transform, directionToWP, raycastDistance);
+            bool leftBlocked = ObstacleDetector.IsObstacleLeft(transform, raycastDistance);
+            bool rightBlocked = ObstacleDetector.IsObstacleRight(transform, raycastDistance);
+
+            if (forwardBlocked)
             {
-                transform.rotation = Quaternion.LookRotation(lookDirection);
+                Debug.Log($"[PatrolAI] {transform.name} detected obstacle forward.");
+                if (!leftBlocked)
+                {
+                    transform.position += -transform.right * ZombieBT.speed * Time.deltaTime;
+                    Debug.Log($"[PatrolAI] {transform.name} sidestepping left.");
+                }
+                else if (!rightBlocked)
+                {
+                    transform.position += transform.right * ZombieBT.speed * Time.deltaTime;
+                    Debug.Log($"[PatrolAI] {transform.name} sidestepping right.");
+                }
+                else
+                {
+                    Debug.Log($"[PatrolAI] {transform.name} is blocked on all sides, pausing.");
+                }
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, wp.position, ZombieBT.speed * Time.deltaTime);
+
+                if (directionToWP != Vector3.zero)
+                {
+                    directionToWP.y = 0f;
+                    transform.rotation = Quaternion.LookRotation(directionToWP);
+                }
             }
         }
 

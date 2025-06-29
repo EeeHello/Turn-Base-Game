@@ -1,7 +1,8 @@
 using BehaviorTree;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class ZombieBT : Tree
+public class ZombieBT : BehaviorTree.Tree
 {
     public UnityEngine.Transform[] waypoints;
 
