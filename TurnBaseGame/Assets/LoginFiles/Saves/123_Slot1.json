@@ -1,11 +1,36 @@
 {
     "Username": "123",
     "SaveSlot": 1,
-    "Inventory": [],
+    "Weapons": [
+        {
+            "weaponID": "CowBoy Hat",
+            "isEquipped": true,
+            "trust": 0.0,
+            "unlockedBasicActionIDs": [
+                "Hat_Basic_test1"
+            ],
+            "unlockedSkillActionIDs": [
+                "Hat_Skill_test1"
+            ],
+            "equippedBurstActionID": "Hat_Burst_test1",
+            "selectedBasicActionIDs": [
+                "Hat_Basic_test1"
+            ],
+            "selectedSkillActionIDs": [
+                "Hat_Skill_test1"
+            ],
+            "selectedBurstActionID": "Hat_Burst_test1"
+        }
+    ],
     "Abilities": [],
     "Stats": {
         "Level": 1,
-        "Health": 10
+        "Health": 100,
+        "PhyAtk": 20,
+        "MagAtk": 30,
+        "PhyDef": 5,
+        "MagDef": 5,
+        "Luck": 5
     },
     "Effects": []
 }

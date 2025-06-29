@@ -4,16 +4,39 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
+using Unity.VisualScripting;
 
 [System.Serializable]
 public class PlayerData
 {
     public string Username;
     public int SaveSlot;
-    public string[] Inventory;
+    public List<WeaponInventoryEntry> Weapons;
     public Ability[] Abilities;
     public Stats Stats;
     public Effect[] Effects;
+}
+
+
+[System.Serializable]
+public class WeaponInventoryEntry
+{
+    public string weaponID; // ID or name used to reference a WeaponSO or prefab
+    public bool isEquipped; // Whether this weapon is currently active in battle
+
+    [Range(0f, 1f)]
+    public float trust; // Trust level with the weapon
+
+    // Actions unlocked and chosen from this weapon
+    public List<string> unlockedBasicActionIDs;
+    public List<string> unlockedSkillActionIDs;
+    public string equippedBurstActionID;
+
+    // These are the currently selected actions from this weapon
+    public List<string> selectedBasicActionIDs;
+    public List<string> selectedSkillActionIDs;
+    public string selectedBurstActionID;
 }
 
 [System.Serializable]
@@ -28,6 +51,11 @@ public class Stats
 {
     public int Level;
     public int Health;
+    public int PhyAtk;
+    public int MagAtk;
+    public int PhyDef;
+    public int MagDef;
+    public int Luck;
 }
 
 [System.Serializable]
@@ -55,6 +83,9 @@ public class PlayerAccountManager : MonoBehaviour
 {
     [Header("Player Prefab")]
     public GameObject playerPrefab;
+
+    [Header("Starting Weapons")]
+    public List<WeaponSO> startingWeapons;
 
     [Header("Scene Settings")]
     public string gameSceneName; 
@@ -152,10 +183,56 @@ public class PlayerAccountManager : MonoBehaviour
         player.Username = username;
         player.SaveSlot = 1;
         player.Stats.Level = 1;
-        player.Stats.Health = 10;
-        player.Inventory = new string[0];
+        player.Stats.Health = 100;
+        player.Stats.PhyAtk = 20;
+        player.Stats.PhyDef = 5;
+        player.Stats.MagAtk = 30;
+        player.Stats.MagDef = 5;
+        player.Stats.Luck = 5;
         player.Abilities = new Ability[0];
         player.Effects = new Effect[0];
+        player.Weapons = new List<WeaponInventoryEntry>();
+
+        foreach (var weapon in startingWeapons)
+        {
+            WeaponInventoryEntry entry = new WeaponInventoryEntry
+            {
+                weaponID = weapon.weaponName,
+                isEquipped = true,
+                trust = 0.0f,
+
+                unlockedBasicActionIDs = new List<string>(),
+                unlockedSkillActionIDs = new List<string>(),
+                selectedBasicActionIDs = new List<string>(),
+                selectedSkillActionIDs = new List<string>(),
+                equippedBurstActionID = null,
+                selectedBurstActionID = null
+            };
+
+            // Give first basic/skill/burst
+            if (weapon.basicActions.Count > 0)
+            {
+                var basicID = weapon.basicActions[0].action.name;
+                entry.unlockedBasicActionIDs.Add(basicID);
+                entry.selectedBasicActionIDs.Add(basicID);
+            }
+
+            if (weapon.skillActions.Count > 0)
+            {
+                var skillID = weapon.skillActions[0].action.name;
+                entry.unlockedSkillActionIDs.Add(skillID);
+                entry.selectedSkillActionIDs.Add(skillID);
+            }
+
+            if (weapon.baseBurst != null)
+            {
+                var burstID = weapon.baseBurst.name;
+                entry.equippedBurstActionID = burstID;
+                entry.selectedBurstActionID = burstID;
+            }
+
+            player.Weapons.Add(entry);
+        }
 
         string savePath = Path.Combine(saveFolder, $"{username}_Slot1.json");
         File.WriteAllText(savePath, JsonUtility.ToJson(player, true));

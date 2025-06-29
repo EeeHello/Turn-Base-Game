@@ -1,24 +1,48 @@
 {
   "Username": "name",
   "SaveSlot": 1,
-
-  "Inventory": [
-    "item1",
-    "item2"
+  "Weapons": [
+    {
+      "weaponID": "",
+      "isEquipped": true,
+      "trust": 0.6,
+      "unlockedBasicActionIDs": [ "name", "name" ],
+      "unlockedSkillActionIDs": [ "name" ],
+      "equippedBurstActionID": "name",
+      "selectedBasicActionIDs": [ "name" ],
+      "selectedSkillActionIDs": [ "name" ],
+      "selectedBurstActionID": "name"
+    },
+    {
+      "weaponID": "name",
+      "isEquipped": false,
+      "trust": 0.3,
+      "unlockedBasicActionIDs": [ "name" ],
+      "unlockedSkillActionIDs": [],
+      "equippedBurstActionID": "name",
+      "selectedBasicActionIDs": [],
+      "selectedSkillActionIDs": [],
+      "selectedBurstActionID": ""
+    }
   ],
   "Abilities": [
     {
       "name": "ability 1",
-        "other info": "idk"
+      "otherInfo": "idk"
     },
     {
       "name": "ability 2",
-      "other info": "idk"
+      "otherInfo": "idk"
     }
   ],
   "Stats": {
     "Level": 0,
-    "Health": 0
+    "Health": 0,
+    "PhyAtk": 0,
+    "MagAtk": 0,
+    "PhyDef": 0,
+    "MagDef": 0,
+    "Luck": 0
   },
   "Effects": [
     {

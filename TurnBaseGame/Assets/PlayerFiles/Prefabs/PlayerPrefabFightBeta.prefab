@@ -703,7 +703,6 @@ GameObject:
   - component: {fileID: 5086703774812614834}
   - component: {fileID: 4365924982754014028}
   - component: {fileID: 1640858316742540115}
-  - component: {fileID: 6896414850789986361}
   m_Layer: 0
   m_Name: PlayerPrefabFightBeta
   m_TagString: Untagged
@@ -835,21 +834,12 @@ MonoBehaviour:
     Stats:
       Level: 0
       Health: 0
+      PhyAtk: 0
+      MagAtk: 0
+      PhyDef: 0
+      MagDef: 0
+      Luck: 0
     Effects: []
---- !u!114 &6896414850789986361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2821525254353414332}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28ee05d2415f6b646863a23b62f4bcab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 4365924982754014028}
-  skillAnimationPositions: []
 --- !u!1 &2986874553486528815
 GameObject:
   m_ObjectHideFlags: 0
@@ -2497,10 +2487,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1757883532758628741, guid: 0795a2f95bef2b344b1856580203355c, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 6896414850789986361}
-    - target: {fileID: 1757883532758628741, guid: 0795a2f95bef2b344b1856580203355c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
@@ -2600,10 +2586,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8575311515793323400, guid: 0795a2f95bef2b344b1856580203355c, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 6896414850789986361}
     - target: {fileID: 8575311515793323400, guid: 0795a2f95bef2b344b1856580203355c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
