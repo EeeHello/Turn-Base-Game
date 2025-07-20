@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bda789fabfafa748b1c1e1927b3156c, type: 3}
+  m_Name: PlayerDataTemplate
+  m_EditorClassIdentifier: 
+  baseStats:
+    Level: 1
+    Health: 100
+    PhyAtk: 20
+    MagAtk: 30
+    PhyDef: 5
+    MagDef: 5
+    Luck: 5
+  startingAbilities: []
+  startingEffects: []
+  startingWeapons:
+  - {fileID: 11400000, guid: d5a7248d9000da94fbb13968a5af2da0, type: 2}
+  - {fileID: 11400000, guid: 8c270d712b89dd94d8815ebf0081d30e, type: 2}
+  - {fileID: 11400000, guid: fd226195cb02a4a42bdae96a7fbcc70a, type: 2}
+  - {fileID: 11400000, guid: c2389823c17c47d448caa95525c98973, type: 2}

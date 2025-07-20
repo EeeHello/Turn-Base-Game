@@ -112,6 +112,34 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "UI",
+            "id": "998f9d35-783b-47ed-b355-b3d64bc69b5e",
+            "actions": [
+                {
+                    "name": "ToggleTabMenu",
+                    "type": "Button",
+                    "id": "4a951ca2-9ff8-45d1-b3f7-050155286639",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4bf837e9-d504-4fc2-bd7f-7186539f75c0",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleTabMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
