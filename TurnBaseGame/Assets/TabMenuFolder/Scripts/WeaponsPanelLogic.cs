@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using TMPro;
 using System.Collections.Generic;
 using System.Linq;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class WeaponsPanelLogic : MonoBehaviour
 {
@@ -43,8 +44,8 @@ public class WeaponsPanelLogic : MonoBehaviour
     public Vector3 infoPanelOffScreenPosition;
     public float infoPanelSlideSpeed = 5f;
 
-    private bool lastClickedWasWeapon = false;
-    private float timeSinceClick = 0f;
+    private bool lastHoverdWasWeapon = false;
+    private float timeSinceHoverd = 0f;
     public float infoPanelVisibleDuration = 10f;
 
     private PlayerRuntime playerRuntime;
@@ -71,13 +72,13 @@ public class WeaponsPanelLogic : MonoBehaviour
         AnimateWeaponCircle();
         UpdateInfoPanelPosition();
 
-        if (lastClickedWasWeapon)
+        if (lastHoverdWasWeapon)
         {
-            timeSinceClick += Time.deltaTime;
-            if (timeSinceClick > infoPanelVisibleDuration)
+            timeSinceHoverd += Time.deltaTime;
+            if (timeSinceHoverd > infoPanelVisibleDuration)
             {
-                lastClickedWasWeapon = false;
-                timeSinceClick = 0f;
+                lastHoverdWasWeapon = false;
+                timeSinceHoverd = 0f;
             }
         }
 
@@ -110,19 +111,23 @@ public class WeaponsPanelLogic : MonoBehaviour
         UpdateWeaponCirclePositions();
     }
 
-    void OnWeaponCircleClicked(Button clicked)
+    public void OnMouseHoverCircleWeapon(GameObject Hoverd)
     {
-        string weaponName = clicked.GetComponentInChildren<TextMeshProUGUI>().text;
-        weaponSlots[currentSlotIndex].GetComponentInChildren<TextMeshProUGUI>().text = weaponName;
+        lastHoverdWasWeapon = true;
+        timeSinceHoverd = 0f;
 
-        lastClickedWasWeapon = true;
-        timeSinceClick = 0f;
+        if (Hoverd == infoPanel) return;
+        string weaponName = Hoverd.name.Replace("WeaponButton_", "");
 
+        Transform infoTMPTransform = infoPanel.transform.Find("Info (TMP)");
+        TextMeshProUGUI tmp = infoTMPTransform.GetComponent<TextMeshProUGUI>();
+        tmp.text = weaponName;
     }
+
 
     void UpdateInfoPanelPosition()
     {
-        Vector3 targetPosition = lastClickedWasWeapon ? infoPanelOnScreenPosition : infoPanelOffScreenPosition;
+        Vector3 targetPosition = lastHoverdWasWeapon ? infoPanelOnScreenPosition : infoPanelOffScreenPosition;
         infoPanel.transform.localPosition = Vector3.Lerp(infoPanel.transform.localPosition, targetPosition, Time.deltaTime * infoPanelSlideSpeed);
     }
 
@@ -253,6 +258,7 @@ public class WeaponsPanelLogic : MonoBehaviour
 
     public void OnCircleWeaponClicked(GameObject clicked)
     {
+        //unequip current weapon if any
         string currentWeaponName = weaponSlots[currentSlotIndex].GetComponentInChildren<TextMeshProUGUI>().text;
         string CNameWithoutPrefix = currentWeaponName.Replace("WeaponButton_", "");
         WeaponInventoryEntry CWeapon = weapons.FirstOrDefault(w => w.weaponID == CNameWithoutPrefix);
@@ -261,6 +267,7 @@ public class WeaponsPanelLogic : MonoBehaviour
         string weaponName = clicked.GetComponentInChildren<TextMeshProUGUI>().text;
         weaponSlots[currentSlotIndex].GetComponentInChildren<TextMeshProUGUI>().text = weaponName;
 
+        //equip choosen weapon
         string nameWithoutPrefix = weaponName.Replace("WeaponButton_", "");
         WeaponInventoryEntry weapon = weapons.FirstOrDefault(w => w.weaponID == nameWithoutPrefix);
         weapon.isEquipped=true;

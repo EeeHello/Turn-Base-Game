@@ -20,6 +20,39 @@
                 "Hat_Skill_test1"
             ],
             "selectedBurstActionID": "Hat_Burst_test1"
+        },
+        {
+            "weaponID": "magictest",
+            "isEquipped": true,
+            "trust": 0.0,
+            "unlockedBasicActionIDs": [],
+            "unlockedSkillActionIDs": [],
+            "equippedBurstActionID": "",
+            "selectedBasicActionIDs": [],
+            "selectedSkillActionIDs": [],
+            "selectedBurstActionID": ""
+        },
+        {
+            "weaponID": "meep",
+            "isEquipped": true,
+            "trust": 0.0,
+            "unlockedBasicActionIDs": [],
+            "unlockedSkillActionIDs": [],
+            "equippedBurstActionID": "",
+            "selectedBasicActionIDs": [],
+            "selectedSkillActionIDs": [],
+            "selectedBurstActionID": ""
+        },
+        {
+            "weaponID": "swordtest",
+            "isEquipped": true,
+            "trust": 0.0,
+            "unlockedBasicActionIDs": [],
+            "unlockedSkillActionIDs": [],
+            "equippedBurstActionID": "",
+            "selectedBasicActionIDs": [],
+            "selectedSkillActionIDs": [],
+            "selectedBurstActionID": ""
         }
     ],
     "Abilities": [],
