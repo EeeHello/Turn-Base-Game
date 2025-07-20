@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Linq;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
@@ -23,13 +24,6 @@ public class PlayerSpawner : MonoBehaviour
 
         // Spawn the camera first
         GameObject camObj = Instantiate(camPrefab);
-        Camera cam = camObj.GetComponent<Camera>();
-
-        if (cam == null)
-        {
-            Debug.LogError("Camera prefab does not contain a Camera component!");
-            return;
-        }
 
         GameObject playerObj;
 
@@ -40,12 +34,8 @@ public class PlayerSpawner : MonoBehaviour
         }
         else playerObj = Instantiate(playerPrefab, transform.position, Quaternion.identity);
 
-        // Assign the camera to the SideScrollerCamera script AFTER it's been instantiated
-        SideScrollerCamera scCam = playerObj.GetComponent<SideScrollerCamera>();
-        if (scCam != null)
-        {
-            scCam.cam = cam;
-        }
+
+        FindAnyObjectByType<CinemachineCamera>().Target.TrackingTarget = playerObj.transform;
 
         // Initialize the player with its data
         PlayerRuntime runtime = playerObj.GetComponent<PlayerRuntime>();

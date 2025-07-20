@@ -1810,7 +1810,6 @@ GameObject:
   - component: {fileID: 2138917784197420631}
   - component: {fileID: 2442193994931732184}
   - component: {fileID: 3353121124158811789}
-  - component: {fileID: 1507889675343969360}
   - component: {fileID: 4672285995178932618}
   - component: {fileID: 7741769763692167703}
   - component: {fileID: 2466114883171963178}
@@ -1881,27 +1880,6 @@ MonoBehaviour:
   jumpForce: 18
   jumpTime: 0.85
   gravity: 9.8
---- !u!114 &1507889675343969360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7824155768676534005}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aeabecfe61818b245ad28f474bf4356f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 0}
-  target: {fileID: 2138917784197420631}
-  offset: {x: -4, y: 2, z: 0}
-  smoothSpeed: 2
-  collisionCheckRadius: 1
-  maxCameraPullBack: 5
-  pullBackStep: 0.1
-  minBounds: {x: -16, y: 0, z: -16}
-  maxBounds: {x: 16, y: 0, z: 16}
 --- !u!114 &4672285995178932618
 MonoBehaviour:
   m_ObjectHideFlags: 0
