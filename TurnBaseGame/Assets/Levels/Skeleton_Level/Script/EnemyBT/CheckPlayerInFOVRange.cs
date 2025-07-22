@@ -5,13 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class CheckPlayerInFOVRange : Node
 {
-    private Transform transform;
-    private Animator animator;
+    private readonly Transform transform;
+    private readonly Animator animator;
+    private readonly System.Action<Vector3> onSpottedPlayer;
 
-    public CheckPlayerInFOVRange(Transform transform)
+    public CheckPlayerInFOVRange(Transform transform, System.Action<Vector3> onSpottedPlayer)
     {
         this.transform = transform;
-        animator = transform.GetComponent<Animator>();
+        this.animator = transform.GetComponent<Animator>();
+        this.onSpottedPlayer = onSpottedPlayer;
     }
 
     public override NodeState Evaluate()
@@ -20,28 +22,25 @@ public class CheckPlayerInFOVRange : Node
 
         if (player == null)
         {
-            Debug.LogWarning("Player with tag 'Player' not found!");
             state = NodeState.FAILURE;
             return state;
         }
 
         float distance = Vector3.Distance(transform.position, player.transform.position);
 
-        //Debug.Log(distance);
-
         if (distance <= ZombieBT.fovRange)
         {
-            parent.parent.SetData("lastKnownPosition", player.transform.position);
+            onSpottedPlayer?.Invoke(player.transform.position);
             animator.SetBool("Walking", true);
-            state = NodeState.SUCCESS;
             HandleCollisionWithPlayer(distance, player);
+            state = NodeState.SUCCESS;
             return state;
         }
-
 
         state = NodeState.FAILURE;
         return state;
     }
+
 
     private void HandleCollisionWithPlayer(float distance, GameObject player)
     {
