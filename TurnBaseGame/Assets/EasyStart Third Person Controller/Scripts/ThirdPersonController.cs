@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class ThirdPersonController : MonoBehaviour
 {
+
     public float velocity = 5f;
     public float sprintAdittion = 3.5f;
     public float jumpForce = 18f;

@@ -16,6 +16,7 @@ public class WeaponsPanelLogic : MonoBehaviour
     public Button rightArrow;
     public GameObject infoPanel;
 
+    [Header("Center Points")]
     public Transform weaponSlotCenter;   // center point for weaponSlots
     public Transform weaponCircleCenter; // center point for weaponCircle
 

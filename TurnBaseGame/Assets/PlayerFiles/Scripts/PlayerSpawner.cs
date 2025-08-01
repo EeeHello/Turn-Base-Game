@@ -5,15 +5,18 @@ using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
 {
+    [Header("Prefabs")]
     public GameObject playerPrefab;
     public GameObject camPrefab;
-    public bool isInFightingScene;
+    public GameObject enemyPrefab;
 
+
+    [Header("FightScene Positions")]
     public Transform[] playerPositions;
     public Transform[] enemiesPositions;
-    public GameObject enemyPrefab; // Assign this in the Inspector
-    public GameObject[] enemies;   // Filled dynamically before scene loads
 
+    public GameObject[] enemies;   // Filled dynamically before scene loads
+    private bool isInFightingScene;
     private void Start()
     {
         if (PlayerDataCarrier.Instance == null || PlayerDataCarrier.Instance.LoadedPlayerData == null)
