@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class ZombieBT : BehaviorTree.Tree
 {
-    public UnityEngine.Transform[] waypoints;
+    public Transform[] waypoints;
 
     public static float speed = 2f;
     public static float fovRange = 6f;
     public string currentState;
 
-    public float investigationChance;
-    public float agressionLevel = 0.75f;
+    private Transform playerTransform;
+    private Vector3? lastKnownPosition;
 
     protected override Node SetupTree()
     {
@@ -19,18 +19,29 @@ public class ZombieBT : BehaviorTree.Tree
         {
             new Sequence(new List<Node>
             {
-                new CheckPlayerInFOVRange(transform),
-                new TaskGoToTarget(transform),
+                new CheckPlayerInFOVRange(transform, (pos) =>
+                {
+                    lastKnownPosition = pos;
+                    playerTransform = GameObject.FindWithTag("Player")?.transform;
+                }),
+                new TaskGoToTarget(transform, () => playerTransform),
             }),
 
             new Sequence(new List<Node>
             {
-                new RandomChanceNode(investigationChance),
-                new InvestigatePosition(transform),
+                new RandomChanceNode(0.4f),
+                new InvestigatePosition(transform,
+                    () => lastKnownPosition,
+                    () =>
+                    {
+                        lastKnownPosition = null;
+                        playerTransform = null;
+                        currentState = "Investigating";
+                    }),
             }),
-
             new PatrolAI(transform, waypoints)
         });
+
         return root;
     }
 }

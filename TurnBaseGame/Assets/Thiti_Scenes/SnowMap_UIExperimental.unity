@@ -587,6 +587,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7118126848090257980, guid: 99ebb66500116154f9a32a2db82abdec, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.925
+      objectReference: {fileID: 0}
+    - target: {fileID: 7118126848090257980, guid: 99ebb66500116154f9a32a2db82abdec, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 7361075921529313213, guid: 99ebb66500116154f9a32a2db82abdec, type: 3}
       propertyPath: m_Name
       value: Waypoints

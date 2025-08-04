@@ -89,7 +89,7 @@ public class PatrolAI : Node
         {
             transform.position = wp.position;
             waitCounter = 0f;
-            waitTime = Random.Range(20f, 40f);
+            waitTime = Random.Range(2f, 5f);
             PickRandomIdle();
             waiting = true;
         }

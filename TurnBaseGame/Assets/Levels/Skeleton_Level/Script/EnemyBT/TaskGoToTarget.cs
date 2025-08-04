@@ -1,24 +1,23 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 using BehaviorTree;
+
 public class TaskGoToTarget : Node
 {
-    private Transform transform;
+    private readonly Transform transform;
+    private readonly System.Func<Transform> getTarget;
 
-    public TaskGoToTarget(Transform transform)
+    public TaskGoToTarget(Transform transform, System.Func<Transform> getTarget)
     {
         this.transform = transform;
+        this.getTarget = getTarget;
     }
 
     public override NodeState Evaluate()
     {
-        Transform target = (Transform)GetData("target");
-
+        Transform target = getTarget?.Invoke();
         if (target == null)
         {
-            Debug.LogWarning("Target is null in TaskGoToTarget — did CheckPlayerInFOVRange run first?");
             state = NodeState.FAILURE;
             return state;
         }
@@ -26,18 +25,13 @@ public class TaskGoToTarget : Node
         Vector3 direction = (target.position - transform.position).normalized;
         direction.y = 0f;
 
-        // Check for obstacle and adjust direction if needed
         if (ObstacleDetector.IsObstacleForward(transform))
         {
-            //direction = ObstacleDetector.GetAvoidanceDirection(transform);
             direction = ObstacleDetector.GetAvoidanceDirection(transform);
-            Debug.Log($"[TaskGoToTarget] Avoiding obstacle, new direction: {direction}");
         }
 
-        // Movement
         transform.position += direction * ZombieBT.speed * Time.deltaTime;
 
-        // Rotation
         if (direction != Vector3.zero)
         {
             Quaternion lookRotation = Quaternion.LookRotation(direction);
