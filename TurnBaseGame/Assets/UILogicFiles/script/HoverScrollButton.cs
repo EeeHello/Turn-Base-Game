@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using TMPro;
+using System.Collections.Generic;
+
 
 public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -12,11 +14,47 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
     private Vector2 hoverPosition;
     private Vector2 originalPosition;
     public Vector2 hoverOffset;
+
+    [Header("Fight Data")]
+    private FightDataManager fdm;
+    private PlayerRuntime pr;
+    private PlayerData pd;
+    private List<WeaponInventoryEntry> weapons;
+    public List<List<string>> actions;
+    public List<string> basicActions;
+    public List<string> skillActions;
+    public List<string> burstActions;
+
     private void Start()
     {
         GetComponent<Image>().alphaHitTestMinimumThreshold = alphaThreshold;
         originalPosition = transform.position;
         hoverPosition = originalPosition - hoverOffset;
+
+        fdm = FindFirstObjectByType<FightDataManager>();
+
+        if (fdm != null)
+        {
+            pd = fdm.FetchMyPlayersData(transform.parent.parent.gameObject);
+            weapons = fdm.FetchMyWeapons(pd);
+            actions = fdm.FetchMyActions(weapons[0]);
+
+            if (actions != null)
+            {
+                basicActions = actions[0];
+                skillActions = actions[1];
+                burstActions = actions[2];
+            }
+            else
+            {
+                Debug.LogError("actions == null");
+            }
+
+        }
+        else
+        {
+            Debug.LogError("FightDataManager not found in the scene.");
+        }
     }
 
     private void Update()

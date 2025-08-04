@@ -24,7 +24,7 @@ public class WeaponInventoryEntry
 {
     public string weaponID; // ID or name used to reference a WeaponSO or prefab
     public bool isEquipped; // Whether this weapon is currently active in battle
-
+    public WeaponType type;
     [Range(0f, 1f)]
     public float trust; // Trust level with the weapon
 
@@ -206,6 +206,7 @@ public class PlayerAccountManager : MonoBehaviour
             {
                 weaponID = weapon.weaponName,
                 isEquipped = true,
+                type = weapon.type,
                 trust = 0.0f,
 
                 unlockedBasicActionIDs = new List<string>(),

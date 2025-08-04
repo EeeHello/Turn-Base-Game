@@ -23,7 +23,7 @@
         },
         {
             "weaponID": "magictest",
-            "isEquipped": true,
+            "isEquipped": false,
             "trust": 0.0,
             "unlockedBasicActionIDs": [],
             "unlockedSkillActionIDs": [],
@@ -32,28 +32,28 @@
             "selectedSkillActionIDs": [],
             "selectedBurstActionID": ""
         },
-        {
-            "weaponID": "meep",
-            "isEquipped": true,
-            "trust": 0.0,
-            "unlockedBasicActionIDs": [],
-            "unlockedSkillActionIDs": [],
-            "equippedBurstActionID": "",
-            "selectedBasicActionIDs": [],
-            "selectedSkillActionIDs": [],
-            "selectedBurstActionID": ""
-        },
-        {
-            "weaponID": "swordtest",
-            "isEquipped": true,
-            "trust": 0.0,
-            "unlockedBasicActionIDs": [],
-            "unlockedSkillActionIDs": [],
-            "equippedBurstActionID": "",
-            "selectedBasicActionIDs": [],
-            "selectedSkillActionIDs": [],
-            "selectedBurstActionID": ""
-        }
+      {
+        "weaponID": "meep",
+        "isEquipped": false,
+        "trust": 0.0,
+        "unlockedBasicActionIDs": [],
+        "unlockedSkillActionIDs": [],
+        "equippedBurstActionID": "",
+        "selectedBasicActionIDs": [],
+        "selectedSkillActionIDs": [],
+        "selectedBurstActionID": ""
+      },
+      {
+        "weaponID": "swordtest",
+        "isEquipped": false,
+        "trust": 0.0,
+        "unlockedBasicActionIDs": [],
+        "unlockedSkillActionIDs": [],
+        "equippedBurstActionID": "",
+        "selectedBasicActionIDs": [],
+        "selectedSkillActionIDs": [],
+        "selectedBurstActionID": ""
+      }
     ],
     "Abilities": [],
     "Stats": {
