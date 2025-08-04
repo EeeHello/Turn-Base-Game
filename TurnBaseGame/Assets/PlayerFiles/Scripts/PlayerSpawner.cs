@@ -1,18 +1,22 @@
 using NUnit.Framework;
 using System.Linq;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
 {
+    [Header("Prefabs")]
     public GameObject playerPrefab;
     public GameObject camPrefab;
-    public bool isInFightingScene;
+    public GameObject enemyPrefab;
 
+
+    [Header("FightScene Positions")]
     public Transform[] playerPositions;
     public Transform[] enemiesPositions;
-    public GameObject enemyPrefab; // Assign this in the Inspector
-    public GameObject[] enemies;   // Filled dynamically before scene loads
 
+    public GameObject[] enemies;   // Filled dynamically before scene loads
+    public bool isInFightingScene;
     private void Start()
     {
         if (PlayerDataCarrier.Instance == null || PlayerDataCarrier.Instance.LoadedPlayerData == null)
@@ -23,13 +27,6 @@ public class PlayerSpawner : MonoBehaviour
 
         // Spawn the camera first
         GameObject camObj = Instantiate(camPrefab);
-        Camera cam = camObj.GetComponent<Camera>();
-
-        if (cam == null)
-        {
-            Debug.LogError("Camera prefab does not contain a Camera component!");
-            return;
-        }
 
         GameObject playerObj;
 
@@ -40,12 +37,8 @@ public class PlayerSpawner : MonoBehaviour
         }
         else playerObj = Instantiate(playerPrefab, transform.position, Quaternion.identity);
 
-        // Assign the camera to the SideScrollerCamera script AFTER it's been instantiated
-        SideScrollerCamera scCam = playerObj.GetComponent<SideScrollerCamera>();
-        if (scCam != null)
-        {
-            scCam.cam = cam;
-        }
+
+        FindAnyObjectByType<CinemachineCamera>().Target.TrackingTarget = playerObj.transform;
 
         // Initialize the player with its data
         PlayerRuntime runtime = playerObj.GetComponent<PlayerRuntime>();

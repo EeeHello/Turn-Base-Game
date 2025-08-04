@@ -883,6 +883,7 @@ GameObject:
   - component: {fileID: 1978147907}
   - component: {fileID: 1978147906}
   - component: {fileID: 1978147909}
+  - component: {fileID: 1978147910}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -931,7 +932,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 82.95772
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -957,8 +958,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1978147905}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.028443927, y: -0.93619674, z: 0.34153682, w: 0.07796967}
+  m_LocalPosition: {x: 1.9045339, y: 13.87973, z: 17.564886}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1008,6 +1009,38 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &1978147910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978147905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowDebugText: 0
+  ShowCameraFrustum: 1
+  IgnoreTimeScale: 0
+  WorldUpOverride: {fileID: 0}
+  ChannelMask: -1
+  UpdateMethod: 2
+  BlendUpdateMethod: 1
+  LensModeOverride:
+    Enabled: 0
+    DefaultMode: 2
+  DefaultBlend:
+    Style: 1
+    Time: 2
+    CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  CustomBlends: {fileID: 0}
 --- !u!1001 &3543774295304894645
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1025,13 +1058,29 @@ PrefabInstance:
       value: Level_1
       objectReference: {fileID: 0}
     - target: {fileID: 1856309524659998641, guid: c46c222b6fd17b24db965cf039c333fd, type: 3}
+      propertyPath: playerTemplate
+      value: 
+      objectReference: {fileID: 11400000, guid: e9fcaec6e23040d47b66b398b15ec44a, type: 2}
+    - target: {fileID: 1856309524659998641, guid: c46c222b6fd17b24db965cf039c333fd, type: 3}
       propertyPath: startingWeapons.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1856309524659998641, guid: c46c222b6fd17b24db965cf039c333fd, type: 3}
       propertyPath: 'startingWeapons.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: d5a7248d9000da94fbb13968a5af2da0, type: 2}
+    - target: {fileID: 1856309524659998641, guid: c46c222b6fd17b24db965cf039c333fd, type: 3}
+      propertyPath: 'startingWeapons.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: c2389823c17c47d448caa95525c98973, type: 2}
+    - target: {fileID: 1856309524659998641, guid: c46c222b6fd17b24db965cf039c333fd, type: 3}
+      propertyPath: 'startingWeapons.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 8c270d712b89dd94d8815ebf0081d30e, type: 2}
+    - target: {fileID: 1856309524659998641, guid: c46c222b6fd17b24db965cf039c333fd, type: 3}
+      propertyPath: 'startingWeapons.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: fd226195cb02a4a42bdae96a7fbcc70a, type: 2}
     - target: {fileID: 3806905619890465393, guid: c46c222b6fd17b24db965cf039c333fd, type: 3}
       propertyPath: m_IsActive
       value: 0

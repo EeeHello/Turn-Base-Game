@@ -699,7 +699,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5073706658768941741}
   - component: {fileID: 8442402795035698189}
-  - component: {fileID: 5607204395361282109}
   - component: {fileID: 5086703774812614834}
   - component: {fileID: 4365924982754014028}
   - component: {fileID: 1640858316742540115}
@@ -753,27 +752,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.87, z: 0}
---- !u!114 &5607204395361282109
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2821525254353414332}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aeabecfe61818b245ad28f474bf4356f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 0}
-  target: {fileID: 5073706658768941741}
-  offset: {x: -2.02, y: 1.52, z: -0.66}
-  smoothSpeed: 2
-  collisionCheckRadius: 1
-  maxCameraPullBack: 5
-  pullBackStep: 0.1
-  minBounds: {x: -1000, y: 0, z: -1000}
-  maxBounds: {x: 1000, y: 0, z: 1000}
 --- !u!114 &5086703774812614834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -829,7 +807,7 @@ MonoBehaviour:
   data:
     Username: 
     SaveSlot: 0
-    Inventory: []
+    Weapons: []
     Abilities: []
     Stats:
       Level: 0

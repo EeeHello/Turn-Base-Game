@@ -108,9 +108,11 @@ public class PlayerAccountManager : MonoBehaviour
 
     [Header("File Paths")]
     public string loginPath;
-    public string templatePath;
     public string saveFolder;
     private LoginListWrapper loginList;
+
+    [Header("Player Template")]
+    public PlayerTemplateSO playerTemplate;
 
     private void Start()
     {
@@ -178,22 +180,27 @@ public class PlayerAccountManager : MonoBehaviour
         loginList.accounts.Add(newLogin);
         File.WriteAllText(loginPath, JsonUtility.ToJson(loginList, true));
 
-        string templateJson = File.ReadAllText(templatePath);
-        PlayerData player = JsonUtility.FromJson<PlayerData>(templateJson);
-        player.Username = username;
-        player.SaveSlot = 1;
-        player.Stats.Level = 1;
-        player.Stats.Health = 100;
-        player.Stats.PhyAtk = 20;
-        player.Stats.PhyDef = 5;
-        player.Stats.MagAtk = 30;
-        player.Stats.MagDef = 5;
-        player.Stats.Luck = 5;
-        player.Abilities = new Ability[0];
-        player.Effects = new Effect[0];
-        player.Weapons = new List<WeaponInventoryEntry>();
+        PlayerData player = new PlayerData
+        {
+            Username = username,
+            SaveSlot = 1,
+            Stats = new Stats
+            {
+                Level = playerTemplate.baseStats.Level,
+                Health = playerTemplate.baseStats.Health,
+                PhyAtk = playerTemplate.baseStats.PhyAtk,
+                PhyDef = playerTemplate.baseStats.PhyDef,
+                MagAtk = playerTemplate.baseStats.MagAtk,
+                MagDef = playerTemplate.baseStats.MagDef,
+                Luck = playerTemplate.baseStats.Luck
+            },
+            Abilities = playerTemplate.startingAbilities,
+            Effects = playerTemplate.startingEffects,
+            Weapons = new List<WeaponInventoryEntry>()
+        };
 
-        foreach (var weapon in startingWeapons)
+
+        foreach (var weapon in playerTemplate.startingWeapons)
         {
             WeaponInventoryEntry entry = new WeaponInventoryEntry
             {

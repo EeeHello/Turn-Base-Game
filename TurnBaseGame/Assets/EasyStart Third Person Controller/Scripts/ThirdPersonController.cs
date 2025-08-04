@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class ThirdPersonController : MonoBehaviour
 {
+
     public float velocity = 5f;
     public float sprintAdittion = 3.5f;
     public float jumpForce = 18f;
@@ -23,7 +24,8 @@ public class ThirdPersonController : MonoBehaviour
 
     PlayerInputActions inputActions;
 
-    Camera scCamera;
+    Camera mainCamera;
+
     void Awake()
     {
         inputActions = new PlayerInputActions();
@@ -39,8 +41,13 @@ public class ThirdPersonController : MonoBehaviour
     void Start()
     {
         cc = GetComponent<CharacterController>();
-        scCamera = GetComponent<SideScrollerCamera>().cam;
         animator = GetComponent<Animator>();
+
+        mainCamera = Camera.main;
+        if (mainCamera == null)
+        {
+            Debug.LogWarning("No main camera found. Make sure your camera has the 'MainCamera' tag.");
+        }
 
         if (animator == null)
             Debug.LogWarning("Missing Animator component.");
@@ -73,43 +80,48 @@ public class ThirdPersonController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float velocityAdittion = isSprinting ? sprintAdittion : 0;
-        float directionX = inputHorizontal * (velocity + velocityAdittion) * Time.fixedDeltaTime;
-        float directionZ = inputVertical * (velocity + velocityAdittion) * Time.fixedDeltaTime;
-        float directionY = 0;
+        float velocityAddition = isSprinting ? sprintAdittion : 0f;
+
+        // Read input from Input System
+        Vector3 input = new Vector3(inputHorizontal, 0f, inputVertical);
+
+        // Fix control direction: rotate input 90° clockwise
+        Vector3 rotatedInput = new Vector3(input.z, 0f, -input.x);
+
+        // Apply speed and deltaTime
+        Vector3 move = rotatedInput.normalized * (velocity + velocityAddition) * Time.fixedDeltaTime;
+
+        // Handle vertical movement (jumping + gravity)
+        float directionY = 0f;
 
         if (isJumping)
         {
             directionY = Mathf.SmoothStep(jumpForce, jumpForce * 0.3f, jumpElapsedTime / jumpTime) * Time.deltaTime;
             jumpElapsedTime += Time.deltaTime;
+
             if (jumpElapsedTime >= jumpTime)
             {
                 isJumping = false;
-                jumpElapsedTime = 0;
+                jumpElapsedTime = 0f;
             }
         }
 
         directionY -= gravity * Time.deltaTime;
 
-        Vector3 forward = scCamera.transform.forward;
-        Vector3 right = scCamera.transform.right;
-        forward.y = right.y = 0;
-        forward.Normalize();
-        right.Normalize();
+        // Add vertical movement
+        Vector3 movement = move + Vector3.up * directionY;
 
-        forward *= directionZ;
-        right *= directionX;
-
-        if (directionX != 0 || directionZ != 0)
-        {
-            float angle = Mathf.Atan2(forward.x + right.x, forward.z + right.z) * Mathf.Rad2Deg;
-            Quaternion rotation = Quaternion.Euler(0, angle, 0);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.15f);
-        }
-
-        Vector3 movement = (forward + right) + (Vector3.up * directionY);
+        // Move the character
         cc.Move(movement);
+
+        // Rotate the character to face movement direction
+        if (rotatedInput != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(rotatedInput);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 0.15f);
+        }
     }
+
 
     void HeadHittingDetect()
     {
