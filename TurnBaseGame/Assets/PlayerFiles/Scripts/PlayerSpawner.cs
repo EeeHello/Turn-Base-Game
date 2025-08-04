@@ -16,7 +16,7 @@ public class PlayerSpawner : MonoBehaviour
     public Transform[] enemiesPositions;
 
     public GameObject[] enemies;   // Filled dynamically before scene loads
-    private bool isInFightingScene;
+    public bool isInFightingScene;
     private void Start()
     {
         if (PlayerDataCarrier.Instance == null || PlayerDataCarrier.Instance.LoadedPlayerData == null)
