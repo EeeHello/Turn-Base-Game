@@ -78,4 +78,30 @@ public class FightDataManager : MonoBehaviour
         return new List<List<string>> { bActions, sActions, buAction};
     }
 
+    public WeaponInventoryEntry GiveActiveWeapon(int directionOfSwitch, PlayerData pd, WeaponInventoryEntry currentWeapon)
+    {
+        List<WeaponInventoryEntry> listOfWeapons = FetchMyWeapons(pd);
+        int weaponIndex;
+        for (int i = 0; i < listOfWeapons.Count; i++)
+        {
+            if (listOfWeapons[i] == currentWeapon)
+            {
+                switch (i + directionOfSwitch)
+                {
+                    default:
+                        weaponIndex = i + directionOfSwitch;
+                        break;
+                    case <0:
+                        weaponIndex = 2;
+                        break;
+                    case >2:
+                        weaponIndex = 0;
+                        break;
+                }
+                return listOfWeapons[weaponIndex];
+            }
+        }
+        return currentWeapon;
+    }
+
 }

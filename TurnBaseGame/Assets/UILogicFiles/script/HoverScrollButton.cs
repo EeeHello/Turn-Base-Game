@@ -10,10 +10,28 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
 {
     public float alphaThreshold = 0.1f;
     private bool isHovering = false;
-    public int scrollIndex = 1;
+    public int _scrollIndex = 1;
+    public int ScrollIndex
+    {
+        get => _scrollIndex;
+        set
+        {
+            _scrollIndex = value;
+            if (_scrollIndex > 3) _scrollIndex = 1;
+            if (_scrollIndex < 1) _scrollIndex = 3;
+
+            OnScrollIndexChanged(_scrollIndex);
+        }
+    }
+
+
+
     private Vector2 hoverPosition;
     private Vector2 originalPosition;
     public Vector2 hoverOffset;
+    public float scrollCooldown = 0.2f;
+    private float lastScrollTime;
+    private GameObject Player;
 
     [Header("Fight Data")]
     private FightDataManager fdm;
@@ -27,6 +45,8 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void Start()
     {
+        Player = transform.parent.parent.gameObject;
+
         GetComponent<Image>().alphaHitTestMinimumThreshold = alphaThreshold;
         originalPosition = transform.position;
         hoverPosition = originalPosition - hoverOffset;
@@ -35,7 +55,7 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
         if (fdm != null)
         {
-            pd = fdm.FetchMyPlayersData(transform.parent.parent.gameObject);
+            pd = fdm.FetchMyPlayersData(Player);
             weapons = fdm.FetchMyWeapons(pd);
             actions = fdm.FetchMyActions(weapons[0]);
 
@@ -61,21 +81,27 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
     {
         if (!isHovering) return;
 
-        float scroll = Mouse.current.scroll.ReadValue().y;
+        float rawScroll = Mouse.current.scroll.ReadValue().y;
 
-        if (Mathf.Abs(scroll) > 0.1f)
+        if (Mathf.Abs(rawScroll) < 0.1f) return; // Ignore tiny/no movement
+
+        float scroll = Mathf.Sign(rawScroll);
+
+        if (Time.time - lastScrollTime > scrollCooldown)
         {
             if (scroll > 0)
-                scrollIndex++;
+                ScrollIndex++;
             else
-                scrollIndex--;
+                ScrollIndex--;
 
-            // Loop scrollIndex between 1 and 3
-            if (scrollIndex > 3) scrollIndex = 1;
-            if (scrollIndex < 1) scrollIndex = 3;
-
-
+            lastScrollTime = Time.time;
         }
+    }
+    private void OnScrollIndexChanged(int index)
+    {
+        // Example: Change visual, trigger update, etc.
+        Debug.Log($"Scroll index changed to: {index}");
+
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -86,7 +112,7 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
 ;
     }
 
-public void OnPointerExit(PointerEventData eventData)
+    public void OnPointerExit(PointerEventData eventData)
     {
         isHovering = false;
         transform.localScale = new Vector3(1.5f, 10, 1.5f);

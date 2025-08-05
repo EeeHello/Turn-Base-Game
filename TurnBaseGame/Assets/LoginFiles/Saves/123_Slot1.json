@@ -21,20 +21,20 @@
             ],
             "selectedBurstActionID": "Hat_Burst_test1"
         },
-        {
-            "weaponID": "magictest",
-            "isEquipped": false,
-            "trust": 0.0,
-            "unlockedBasicActionIDs": [],
-            "unlockedSkillActionIDs": [],
-            "equippedBurstActionID": "",
-            "selectedBasicActionIDs": [],
-            "selectedSkillActionIDs": [],
-            "selectedBurstActionID": ""
-        },
+      {
+        "weaponID": "magictest",
+        "isEquipped": true,
+        "trust": 0.0,
+        "unlockedBasicActionIDs": [],
+        "unlockedSkillActionIDs": [],
+        "equippedBurstActionID": "",
+        "selectedBasicActionIDs": [],
+        "selectedSkillActionIDs": [],
+        "selectedBurstActionID": ""
+      },
       {
         "weaponID": "meep",
-        "isEquipped": false,
+        "isEquipped": true,
         "trust": 0.0,
         "unlockedBasicActionIDs": [],
         "unlockedSkillActionIDs": [],
