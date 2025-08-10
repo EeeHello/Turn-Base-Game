@@ -2374,6 +2374,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2138917784197420631}
     m_Modifications:
+    - target: {fileID: 4130473821450678160, guid: d9a12216c353df04990f1e905c3910c9, type: 3}
+      propertyPath: playerData
+      value: 
+      objectReference: {fileID: 2466114883171963178}
+    - target: {fileID: 4130473821450678160, guid: d9a12216c353df04990f1e905c3910c9, type: 3}
+      propertyPath: weaponPanelCustomizationParent
+      value: 
+      objectReference: {fileID: 6377571382535905121}
     - target: {fileID: 4855595130088351855, guid: d9a12216c353df04990f1e905c3910c9, type: 3}
       propertyPath: m_Name
       value: TabMenu
@@ -2466,5 +2474,10 @@ PrefabInstance:
 --- !u!224 &4657913132712549622 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8803870781346006432, guid: d9a12216c353df04990f1e905c3910c9, type: 3}
+  m_PrefabInstance: {fileID: 4218072419604404566}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &6377571382535905121 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7063955275859576375, guid: d9a12216c353df04990f1e905c3910c9, type: 3}
   m_PrefabInstance: {fileID: 4218072419604404566}
   m_PrefabAsset: {fileID: 0}

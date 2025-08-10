@@ -3096,6 +3096,8 @@ GameObject:
   - component: {fileID: 7063955275859576375}
   - component: {fileID: 6459124486462063679}
   - component: {fileID: 4367908023230004846}
+  - component: {fileID: 6482052995346514577}
+  - component: {fileID: 4130473821450678160}
   m_Layer: 5
   m_Name: WeaponCustomizationPanel
   m_TagString: Untagged
@@ -3160,3 +3162,44 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6482052995346514577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9166814335731349676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
+--- !u!114 &4130473821450678160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9166814335731349676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e793a9c7c516e3246bf0361678d033f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponPanelCustomizationParent: {fileID: 0}
+  weaponPanelPrefab: {fileID: 8161407049542550840, guid: 9403899cf5a590c4e81759d0dc5ac63c, type: 3}
+  playerData: {fileID: 0}

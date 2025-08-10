@@ -2,7 +2,17 @@
     "accounts": [
         {
             "Username": "123",
-            "Password": "233",
+            "Password": "123",
+            "SaveSlotCount": 1
+        },
+        {
+            "Username": "321",
+            "Password": "123",
+            "SaveSlotCount": 1
+        },
+        {
+            "Username": "111",
+            "Password": "111",
             "SaveSlotCount": 1
         }
     ]

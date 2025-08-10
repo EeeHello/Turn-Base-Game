@@ -290,4 +290,9 @@ public class WeaponsPanelLogic : MonoBehaviour
         currentSlotIndex = (currentSlotIndex + 1) % weaponSlots.Length;
         targetRotationAngle -= 360f / weaponSlots.Length;
     }
+
+    public List<WeaponInventoryEntry> GetSelectedWeapons()
+    {
+        return weapons.Where(w => w.isEquipped).ToList();
+    }
 }

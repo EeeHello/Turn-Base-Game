@@ -31,7 +31,7 @@ public class WeaponInventoryEntry
     // Actions unlocked and chosen from this weapon
     public List<string> unlockedBasicActionIDs;
     public List<string> unlockedSkillActionIDs;
-    public string equippedBurstActionID;
+    public string unlockedBurstActionID;
 
     // These are the currently selected actions from this weapon
     public List<string> selectedBasicActionIDs;
@@ -208,34 +208,60 @@ public class PlayerAccountManager : MonoBehaviour
                 isEquipped = true,
                 type = weapon.type,
                 trust = 0.0f,
+                //trust = 8.0f,
 
                 unlockedBasicActionIDs = new List<string>(),
                 unlockedSkillActionIDs = new List<string>(),
                 selectedBasicActionIDs = new List<string>(),
                 selectedSkillActionIDs = new List<string>(),
-                equippedBurstActionID = null,
+                unlockedBurstActionID = null,
                 selectedBurstActionID = null
             };
 
-            // Give first basic/skill/burst
+            // Give basic/skill/burst
             if (weapon.basicActions.Count > 0)
             {
-                var basicID = weapon.basicActions[0].action.name;
-                entry.unlockedBasicActionIDs.Add(basicID);
-                entry.selectedBasicActionIDs.Add(basicID);
+                
+                foreach (var basicAction in weapon.basicActions)
+                {
+                    var basicRequiredTrust = basicAction.requiredTrust;
+
+                    if (basicRequiredTrust >= entry.trust)
+                    {
+                        var basicID = basicAction.action.name;
+
+                        entry.unlockedBasicActionIDs.Add(basicID);
+                    }
+                    
+                }
+                // Select the first basic action by default
+                entry.selectedBasicActionIDs.Add(weapon.basicActions[0].action.name);
+
+
             }
 
             if (weapon.skillActions.Count > 0)
             {
-                var skillID = weapon.skillActions[0].action.name;
-                entry.unlockedSkillActionIDs.Add(skillID);
-                entry.selectedSkillActionIDs.Add(skillID);
+                foreach (var skillAction in weapon.skillActions)
+                {
+                    var skillRequiredTrust = skillAction.requiredTrust;
+
+                    if (skillRequiredTrust >= entry.trust)
+                    {
+                        var skillID = skillAction.action.name;
+
+                        entry.unlockedSkillActionIDs.Add(skillID);
+                    }
+
+                }
+                // Select the first skill action by default
+                entry.selectedSkillActionIDs.Add(weapon.skillActions[0].action.name);
             }
 
             if (weapon.baseBurst != null)
             {
                 var burstID = weapon.baseBurst.name;
-                entry.equippedBurstActionID = burstID;
+                entry.unlockedBurstActionID = burstID;
                 entry.selectedBurstActionID = burstID;
             }
 

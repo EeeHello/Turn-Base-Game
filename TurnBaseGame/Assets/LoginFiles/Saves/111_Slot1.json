@@ -1,5 +1,5 @@
 {
-    "Username": "123",
+    "Username": "111",
     "SaveSlot": 1,
     "Weapons": [
         {
@@ -8,10 +8,12 @@
             "type": 1,
             "trust": 0.0,
             "unlockedBasicActionIDs": [
+                "Hat_Basic_test1",
                 "Hat_Basic_test2",
                 "Hat_Basic_test3"
             ],
             "unlockedSkillActionIDs": [
+                "Hat_Skill_test1",
                 "Hat_Skill_test2",
                 "Hat_Skill_test3"
             ],
@@ -29,8 +31,16 @@
             "isEquipped": true,
             "type": 0,
             "trust": 0.0,
-            "unlockedBasicActionIDs": [],
-            "unlockedSkillActionIDs": [],
+            "unlockedBasicActionIDs": [
+                "Hat_Basic_test1",
+                "Hat_Basic_test2",
+                "Hat_Basic_test3"
+            ],
+            "unlockedSkillActionIDs": [
+                "Hat_Skill_test1",
+                "Hat_Skill_test2",
+                "Hat_Skill_test3"
+            ],
             "unlockedBurstActionID": "Hat_Burst_test1",
             "selectedBasicActionIDs": [
                 "Hat_Basic_test1"
@@ -45,8 +55,16 @@
             "isEquipped": true,
             "type": 0,
             "trust": 0.0,
-            "unlockedBasicActionIDs": [],
-            "unlockedSkillActionIDs": [],
+            "unlockedBasicActionIDs": [
+                "Hat_Basic_test1",
+                "Hat_Basic_test2",
+                "Hat_Basic_test3"
+            ],
+            "unlockedSkillActionIDs": [
+                "Hat_Skill_test1",
+                "Hat_Skill_test2",
+                "Hat_Skill_test3"
+            ],
             "unlockedBurstActionID": "Hat_Burst_test1",
             "selectedBasicActionIDs": [
                 "Hat_Basic_test1"
