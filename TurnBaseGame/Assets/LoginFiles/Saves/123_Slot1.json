@@ -8,10 +8,12 @@
             "type": 1,
             "trust": 0.0,
             "unlockedBasicActionIDs": [
+                "Hat_Basic_test1",
                 "Hat_Basic_test2",
                 "Hat_Basic_test3"
             ],
             "unlockedSkillActionIDs": [
+                "Hat_Skill_test1",
                 "Hat_Skill_test2",
                 "Hat_Skill_test3"
             ],
@@ -29,32 +31,48 @@
             "isEquipped": true,
             "type": 0,
             "trust": 0.0,
-            "unlockedBasicActionIDs": [],
-            "unlockedSkillActionIDs": [],
-            "unlockedBurstActionID": "Hat_Burst_test1",
+            "unlockedBasicActionIDs": [
+                "Magic_Basic_test1",
+                "Magic_Basic_test2",
+                "Magic_Basic_test3"
+            ],
+            "unlockedSkillActionIDs": [
+                "Magic_Skill_test1",
+                "Magic_Skill_test2",
+                "Magic_Skill_test3"
+            ],
+            "unlockedBurstActionID": "Magic_Burst_test1",
             "selectedBasicActionIDs": [
-                "Hat_Basic_test1"
+                "Magic_Basic_test1"
             ],
             "selectedSkillActionIDs": [
-                "Hat_Skill_test1"
+                "Magic_Skill_test1"
             ],
-            "selectedBurstActionID": "Hat_Burst_test1"
+            "selectedBurstActionID": "Magic_Burst_test1"
         },
         {
             "weaponID": "swordtest",
             "isEquipped": true,
             "type": 0,
             "trust": 0.0,
-            "unlockedBasicActionIDs": [],
-            "unlockedSkillActionIDs": [],
-            "unlockedBurstActionID": "Hat_Burst_test1",
+            "unlockedBasicActionIDs": [
+                "Sword_Basic_test1",
+                "Sword_Basic_test2",
+                "Sword_Basic_test3"
+            ],
+            "unlockedSkillActionIDs": [
+                "Sword_Skill_test1",
+                "Sword_Skill_test2",
+                "Sword_Skill_test3"
+            ],
+            "unlockedBurstActionID": "Sword_Burst_test1",
             "selectedBasicActionIDs": [
-                "Hat_Basic_test1"
+                "Sword_Basic_test1"
             ],
             "selectedSkillActionIDs": [
-                "Hat_Skill_test1"
+                "Sword_Skill_test1"
             ],
-            "selectedBurstActionID": "Hat_Burst_test1"
+            "selectedBurstActionID": "Sword_Burst_test1"
         }
     ],
     "Abilities": [],

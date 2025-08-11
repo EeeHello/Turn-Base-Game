@@ -15,18 +15,18 @@ MonoBehaviour:
   weaponName: magictest
   type: 0
   basicActions:
-  - action: {fileID: 11400000, guid: 69a9ef814932f574f989abb4a11dab40, type: 2}
+  - action: {fileID: 11400000, guid: 17988845a7db40d42845c59bc995a308, type: 2}
     requiredTrust: 0
-  - action: {fileID: 11400000, guid: bd2f72be90484d940a892de1924ee81d, type: 2}
+  - action: {fileID: 11400000, guid: c586d6ebde1f0d64b94e0f8177bfaff3, type: 2}
     requiredTrust: 0
-  - action: {fileID: 11400000, guid: ef65fcdf6266ac8478a83f517f2092f9, type: 2}
+  - action: {fileID: 11400000, guid: 9956ddedf54da8940a18453b681b2022, type: 2}
     requiredTrust: 0
   skillActions:
-  - action: {fileID: 11400000, guid: e61c5ec948f606946b85840144d45024, type: 2}
+  - action: {fileID: 11400000, guid: a8bfb72399ba9f345aa1ccd535f82089, type: 2}
     requiredTrust: 0
-  - action: {fileID: 11400000, guid: 2acb6f27e032e8143ad9444b9862322d, type: 2}
+  - action: {fileID: 11400000, guid: 3ea324504f647d64aa00827b23ce71d8, type: 2}
     requiredTrust: 0
-  - action: {fileID: 11400000, guid: 493977aefbffe1e499b1181440636643, type: 2}
+  - action: {fileID: 11400000, guid: 2a15112eb8fe1534bb9055d0fb85e581, type: 2}
     requiredTrust: 0
   baseBurst: {fileID: 11400000, guid: 828ecd8c2abda0245a5d5816b5a0b71b, type: 2}
   maxTrustBurst: {fileID: 11400000, guid: cd70cd70e39ee8b41941b8f5ba8f56d4, type: 2}
