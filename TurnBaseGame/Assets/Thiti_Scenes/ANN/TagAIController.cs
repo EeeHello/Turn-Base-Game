@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -37,22 +38,41 @@ public class TagAIController : MonoBehaviour
 
         // ANN Decision 
         List<float> outputs = net.Forward(inputs);
-        int decision = outputs.IndexOf(Mathf.Max(outputs.ToArray()));
+        int decision = PickAction(outputs);
+        //int decision = outputs.IndexOf(Mathf.Max(outputs.ToArray()));
+        Debug.Log($"Outputs: {string.Join(", ", outputs.Select(p => p.ToString("F2")))} Decision: {decision}");
+
 
         Vector3 move = Vector3.zero;
         switch (decision)
         {
             case (int)States.MoveTowards:
                 move = toOpponent.normalized;
+                Debug.Log("MoveTowards");
                 break;
             case (int)States.MoveAway: 
                 move = -toOpponent.normalized;
+                Debug.Log("MoveAway");
                 break;
             case (int)States.StandStill:
                 move = Vector3.zero;
+                Debug.Log("Stand still");
                 break;
         }
 
         rb.linearVelocity = move * moveSpeed;
+    }
+
+    private int PickAction(List<float> probs)
+    {
+        float r = UnityEngine.Random.value;
+        float accum = 0f;
+        for (int i = 0; i < probs.Count; i++)
+        {
+            accum += probs[i];
+            if (r <= accum)
+                return i;
+        }
+        return probs.Count - 1;
     }
 }
