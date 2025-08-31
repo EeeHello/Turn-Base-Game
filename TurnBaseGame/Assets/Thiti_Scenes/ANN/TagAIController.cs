@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 [RequireComponent(typeof(Rigidbody))]
 public class TagAIController : MonoBehaviour
@@ -15,15 +17,31 @@ public class TagAIController : MonoBehaviour
     public Transform opponent;
     public bool isChaser = true;
 
+    [Header("Input Settings")]
+    public InputAction toggleRoleAction;
+
     private ANN net;
     private Rigidbody rb;
     public float moveSpeed = 5f;
 
     void Start()
     {
-
         net = new ANN(3, 4, 3);
         rb = GetComponent<Rigidbody>();
+
+        toggleRoleAction.performed += ctx => ToggleRole();
+        toggleRoleAction.Enable();
+
+        Debug.Log($"Initialized as {(isChaser ? "CHASER" : "RUNNER")}. Press configured key to toggle role.");
+    }
+    void OnEnable()
+    {
+        toggleRoleAction?.Enable();
+    }
+
+    void OnDisable()
+    {
+        toggleRoleAction?.Disable();
     }
 
     void FixedUpdate()
@@ -46,23 +64,22 @@ public class TagAIController : MonoBehaviour
         //int decision = outputs.IndexOf(Mathf.Max(outputs.ToArray()));
 
         Debug.Log($"Output count: {outputs.Count}");
-        Debug.Log($"Outputs: {string.Join(", ", outputs.Select(p => p.ToString("F2")))} Decision: {decision}");
+        //Debug.Log($"Outputs: {string.Join(", ", outputs.Select(p => p.ToString("F2")))} Decision: {decision}");
 
-        // --- Rule-based fallback layer ---
+        // Rule-based fallback layer
         if (isChaser)
         {
-            // Chaser should always move towards if close
             if (distance < 0.4f) decision = (int)States.MoveTowards;
         }
         else 
         {
-            // Runner should not stand still if chaser is near
             if (distance < 0.4f && decision == (int)States.StandStill)
                 decision = (int)States.MoveAway;
         }
 
         currentState = (States)decision;
 
+        Debug.Log($"Outputs: {string.Join(", ", outputs.Select(p => p.ToString("F2")))} Decision: {decision}");
         Debug.Log($"Outputs: {string.Join(", ", outputs.Select(p => p.ToString("F2")))} Final Decision: {currentState}");
 
         Vector3 move = Vector3.zero;
@@ -99,4 +116,16 @@ public class TagAIController : MonoBehaviour
         }
         return bestIndex;
     }
+    private void ToggleRole()
+    {
+        isChaser = !isChaser;
+        Debug.Log($"Role changed to {(isChaser ? "CHASER" : "RUNNER")}");
+    }
+
+    //void OnGUI()
+    //{
+    //    GUI.Label(new Rect(10, 10, 200, 30), $"Role: {(isChaser ? "CHASER" : "RUNNER")}");
+    //    GUI.Label(new Rect(10, 30, 300, 30), $"Press configured key to toggle role");
+    //    GUI.Label(new Rect(10, 50, 200, 30), $"State: {currentState}");
+    //}
 }

@@ -736,7 +736,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   opponent: {fileID: 377032857}
-  isChaser: 0
+  isChaser: 1
+  toggleRoleAction:
+    m_Name: Toggle Role
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: cb9d95ac-989c-43ec-be42-a148726e6066
+    m_Processors: 
+    m_Interactions: Press(behavior=2)
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 5dfc0e8e-7559-4423-96d2-6531a5e2b806
+      m_Path: <Keyboard>/t
+      m_Interactions: Tap
+      m_Processors: 
+      m_Groups: 
+      m_Action: Toggle Role
+      m_Flags: 0
+    m_Flags: 0
   moveSpeed: 3
 --- !u!1001 &8478092789360279540
 PrefabInstance:
