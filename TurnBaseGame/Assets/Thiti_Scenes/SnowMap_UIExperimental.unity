@@ -734,9 +734,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639756659e5d53a4fb875637f0692bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 0
   opponent: {fileID: 377032857}
-  isChaser: 1
-  moveSpeed: 5
+  isChaser: 0
+  moveSpeed: 3
 --- !u!1001 &8478092789360279540
 PrefabInstance:
   m_ObjectHideFlags: 0

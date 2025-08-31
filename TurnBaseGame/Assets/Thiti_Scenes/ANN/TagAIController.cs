@@ -5,11 +5,13 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class TagAIController : MonoBehaviour
 {
-    private enum States {
+    public enum States {
         MoveTowards,
         MoveAway, 
         StandStill
     }
+
+    public States currentState;
     public Transform opponent;
     public bool isChaser = true;
 
@@ -30,6 +32,8 @@ public class TagAIController : MonoBehaviour
 
         // Inputs 
         Vector3 toOpponent = opponent.position - transform.position;
+        toOpponent.y = 0f;
+
         float distance = Mathf.Clamp01(toOpponent.magnitude / 20f); 
         float angle = Vector3.Dot(transform.forward.normalized, toOpponent.normalized); 
         float role = isChaser ? 1f : 0f;
@@ -38,41 +42,61 @@ public class TagAIController : MonoBehaviour
 
         // ANN Decision 
         List<float> outputs = net.Forward(inputs);
-        int decision = PickAction(outputs);
+        int decision = GetBestAction(outputs);
         //int decision = outputs.IndexOf(Mathf.Max(outputs.ToArray()));
+
+        Debug.Log($"Output count: {outputs.Count}");
         Debug.Log($"Outputs: {string.Join(", ", outputs.Select(p => p.ToString("F2")))} Decision: {decision}");
 
+        // --- Rule-based fallback layer ---
+        if (isChaser)
+        {
+            // Chaser should always move towards if close
+            if (distance < 0.4f) decision = (int)States.MoveTowards;
+        }
+        else 
+        {
+            // Runner should not stand still if chaser is near
+            if (distance < 0.4f && decision == (int)States.StandStill)
+                decision = (int)States.MoveAway;
+        }
+
+        currentState = (States)decision;
+
+        Debug.Log($"Outputs: {string.Join(", ", outputs.Select(p => p.ToString("F2")))} Final Decision: {currentState}");
 
         Vector3 move = Vector3.zero;
-        switch (decision)
+        switch (currentState)
         {
-            case (int)States.MoveTowards:
+            case States.MoveTowards:
                 move = toOpponent.normalized;
                 Debug.Log("MoveTowards");
                 break;
-            case (int)States.MoveAway: 
+            case States.MoveAway:
                 move = -toOpponent.normalized;
                 Debug.Log("MoveAway");
                 break;
-            case (int)States.StandStill:
+            case States.StandStill:
                 move = Vector3.zero;
-                Debug.Log("Stand still");
+                Debug.Log("StandStill");
                 break;
         }
 
         rb.linearVelocity = move * moveSpeed;
     }
 
-    private int PickAction(List<float> probs)
+    private int GetBestAction(List<float> outputs)
     {
-        float r = UnityEngine.Random.value;
-        float accum = 0f;
-        for (int i = 0; i < probs.Count; i++)
+        int bestIndex = 0;
+        float bestValue = outputs[0];
+        for (int i = 1; i < outputs.Count; i++)
         {
-            accum += probs[i];
-            if (r <= accum)
-                return i;
+            if (outputs[i] > bestValue)
+            {
+                bestValue = outputs[i];
+                bestIndex = i;
+            }
         }
-        return probs.Count - 1;
+        return bestIndex;
     }
 }
