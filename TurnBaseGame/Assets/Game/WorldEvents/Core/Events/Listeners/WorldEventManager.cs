@@ -1,27 +1,38 @@
-using UnityEngine;
-using Game.WorldEvents.Core;
-using Game.WorldEvents.Events;
+using System;
+using System.Collections.Generic;
 
-namespace Game.WorldEvents.Listeners
+namespace Game.WorldEvents.Core
 {
-    public class WorldEventManager : MonoBehaviour
+    public static class WorldEventManager
     {
-        private System.IDisposable _bossSub;
+        private static readonly Dictionary<Type, List<Delegate>> listeners = new();
 
-        private void OnEnable()
+        public static void Subscribe<T>(Action<T> callback)
         {
-            _bossSub = EventBus.Subscribe<BossDefeated>(OnBossDefeated);
+            var type = typeof(T);
+            if (!listeners.ContainsKey(type))
+                listeners[type] = new List<Delegate>();
+
+            listeners[type].Add(callback);
         }
 
-        private void OnDisable()
+        public static void Unsubscribe<T>(Action<T> callback)
         {
-            _bossSub?.Dispose(); _bossSub = null;
+            var type = typeof(T);
+            if (listeners.ContainsKey(type))
+                listeners[type].Remove(callback);
         }
 
-        private void OnBossDefeated(BossDefeated e)
+        public static void Publish<T>(T evt)
         {
-            Debug.Log($"[World] Boss '{e.BossId}' down at {e.Position} (PLv {e.PlayerLevel}).");
+            var type = typeof(T);
+            if (listeners.ContainsKey(type))
+            {
+                foreach (var callback in listeners[type])
+                {
+                    (callback as Action<T>)?.Invoke(evt);
+                }
+            }
         }
-
     }
 }

@@ -33,8 +33,12 @@ namespace Game.WorldEvents.Core
         public static void Publish<T>(T evt)
         {
             var t = typeof(T);
+            Debug.Log($"[EventBus] Publishing event of type: {t.Name}");
+
             if (_subs.TryGetValue(t, out var list))
             {
+                Debug.Log($"[EventBus] Found {list.Count} subscribers for {t.Name}");
+
                 // Copy to avoid modification during iteration
                 var snapshot = list.ToArray();
                 for (int i = 0; i < snapshot.Length; i++)
@@ -48,6 +52,10 @@ namespace Game.WorldEvents.Core
                         Debug.LogException(ex);
                     }
                 }
+            }
+            else
+            {
+                Debug.Log($"[EventBus] No subscribers found for {t.Name}");
             }
 
 #if UNITY_EDITOR

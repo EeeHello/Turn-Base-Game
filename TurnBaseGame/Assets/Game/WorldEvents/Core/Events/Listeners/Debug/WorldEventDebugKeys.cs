@@ -1,20 +1,39 @@
 using UnityEngine;
 using Game.WorldEvents.Core;
 using Game.WorldEvents.Events;
+using UnityEngine.InputSystem;
 
 namespace Game.WorldEvents.Debugging
 {
+    /// <summary>
+    /// Debug purposes
+    /// Right now only tested on Boss zombie
+    /// </summary>
     public class WorldEventDebugKeys : MonoBehaviour
     {
-        [SerializeField] private string bossId = "AlphaOgre";
+        [SerializeField] private string bossId = "AlphaZombie001";
 
-        private void Update()
+        [Header("Input settings")]
+        public InputAction bossKillingKey;
+
+        private void OnEnable()
         {
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                var pos = new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10));
-                EventBus.Publish(new BossDefeated(bossId, pos, playerLevel: 7));
-            }
+            bossKillingKey.Enable();
+            bossKillingKey.performed += OnBossKilled;
+        }
+
+        private void OnDisable()
+        {
+            bossKillingKey.performed -= OnBossKilled;
+            bossKillingKey.Disable();
+        }
+
+        private void OnBossKilled(InputAction.CallbackContext context)
+        {
+            Debug.Log($"[DEBUG] Boss {bossId} killed via debug key!");
+
+            // Use static Publish instead of .Instance
+            WorldEventManager.Publish(new BossKilledEvent(bossId));
         }
     }
 }
