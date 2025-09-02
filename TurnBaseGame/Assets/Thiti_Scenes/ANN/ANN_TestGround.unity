@@ -658,6 +658,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1971185678019101130, guid: b81f633ae8c2ecc4ba1b6e791e629ea0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971185678019101130, guid: b81f633ae8c2ecc4ba1b6e791e629ea0, type: 3}
       propertyPath: navigator
       value: 
       objectReference: {fileID: 0}
