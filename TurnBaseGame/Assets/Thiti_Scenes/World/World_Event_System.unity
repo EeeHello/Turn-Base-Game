@@ -351,17 +351,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d02f9d42885f714bb8facc6d2896301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossId: AlphaOgre
+  bossId: AlphaZombie001
   bossKillingKey:
     m_Name: Boss Killing Key
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 29f0aaed-bae9-4651-875d-d1b4025d9cc0
+    m_Id: 67d0831c-37ac-48f6-85b1-94a5a1b30143
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: a0247e5f-8ffe-477d-b485-f87cd9b3e42b
+      m_Id: 1841f28f-6197-4106-9c44-641d753d4d6e
       m_Path: <Keyboard>/t
       m_Interactions: 
       m_Processors: 
@@ -381,6 +381,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49b964b44072a8c44bbd52fa8cf7d014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &369861277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369861268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 014c8765316715040932163eaa054c96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _toggleDebugAction:
+    m_Name: Toggle Debug
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: fa2be0ba-abca-40e3-9c62-bea3e1d81261
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: b0323029-8aaf-46f0-9900-6e71592a3c9b
+      m_Path: <Keyboard>/f1
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Toggle Debug
+      m_Flags: 0
+    m_Flags: 0
+  _printStatsAction:
+    m_Name: Print Stats
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: ed11bd9e-4980-4818-8490-c8ad6d9b6c6c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 16f18bf7-8b1d-4606-b5c6-6a67e1468862
+      m_Path: <Keyboard>/f2
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Print Stats
+      m_Flags: 0
+    m_Flags: 0
+  _clearSubscriptionsAction:
+    m_Name: Clear Subscriptions
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 2efacebf-379d-457d-a190-6905143a9fc1
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 3056d012-8ac0-4a32-92dc-5bae697fe1c2
+      m_Path: <Keyboard>/f3
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Clear Subscriptions
+      m_Flags: 0
+    m_Flags: 0
 --- !u!1 &794246527 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3565203226120876267, guid: 330ccb941fa6927429b6f863e48b7395, type: 3}
@@ -869,6 +932,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2555809526191944870, guid: b81f633ae8c2ecc4ba1b6e791e629ea0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 369861276}
+    - targetCorrespondingSourceObject: {fileID: 2555809526191944870, guid: b81f633ae8c2ecc4ba1b6e791e629ea0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 369861277}
   m_SourcePrefab: {fileID: 100100000, guid: b81f633ae8c2ecc4ba1b6e791e629ea0, type: 3}
 --- !u!1001 &8478092789360279540
 PrefabInstance:
