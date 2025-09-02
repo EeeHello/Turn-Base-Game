@@ -1,12 +1,13 @@
+using System;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using TMPro;
-using System.Collections.Generic;
+using UnityEngine.UI;
 
 
-public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler
 {
     public float alphaThreshold = 0.1f;
     private bool isHovering = false;
@@ -55,7 +56,11 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public Vector2 hoverOffset;
     public float scrollCooldown = 0.2f;
     private float lastScrollTime;
+
+    [Header("GameObjects")]
     private GameObject Player;
+    public GameObject ButtonPrefab;
+    public GameObject SubFightUI;
 
     [Header("Fight Data")]
     private FightDataManager fdm;
@@ -74,8 +79,7 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
         Player = transform.parent.parent.gameObject;
 
         GetComponent<Image>().alphaHitTestMinimumThreshold = alphaThreshold;
-        originalPosition = transform.position;
-        hoverPosition = originalPosition - hoverOffset;
+        
 
         fdm = FindFirstObjectByType<FightDataManager>();
 
@@ -105,8 +109,6 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void Update()
     {
-        if (!isHovering) return;
-
         // Weapon switching with Q/E
         if (Keyboard.current != null)
         {
@@ -120,7 +122,12 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
             }
         }
 
+        if (!isHovering) return;
+
+        
+
         float rawScroll = Mouse.current.scroll.ReadValue().y;
+
         if (Mathf.Abs(rawScroll) < 0.1f) return; // Ignore tiny/no movement
         float scroll = Mathf.Sign(rawScroll);
         if (Time.time - lastScrollTime > scrollCooldown)
@@ -156,24 +163,90 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void OnScrollIndexChanged(int index)
     {
-        // Example: Change visual, trigger update, etc.
-        Debug.Log($"Scroll index changed to: {index}");
+        // Find the correct action list based on currentActionType
+        List<string> actionList = null;
+        switch (currentActionType)
+        {
+            case ActionType.basic:
+                actionList = basicActions;
+                break;
+            case ActionType.skill:
+                actionList = skillActions;
+                break;
+            case ActionType.burst:
+                actionList = burstActions;
+                break;
+        }
+
+        
+        /* text gen, not efficient but "works"
+        // Always create a new TMP_Text component to display the action name
+        TMP_Text actionLabel = null;
+        if (actionLabel == null)
+        {
+            GameObject labelObj = new GameObject("ActionLabel");
+            labelObj.transform.SetParent(transform, false);
+            actionLabel = labelObj.AddComponent<TextMeshProUGUI>();
+        }
+
+        // Set font if provided
+        if (font != null)
+        {
+            actionLabel.font = font;
+        }
+
+        // Update the label text
+        actionLabel.text = actionName;
+        actionLabel.fontSize = 10;
+        actionLabel.alignment = TextAlignmentOptions.Center;
+        actionLabel.color = Color.black;*/
+    }
+    public List<GameObject> spawnedActionBars = new List<GameObject>();
+    public void spawnActionBars(List<string> actionList)
+    {
+        for (int i = 0; i < actionList.Count; i++)
+        {
+            GameObject actionButton = Instantiate(ButtonPrefab);
+            ActionBarScript actionBarScript = actionButton.GetComponent<ActionBarScript>();
+            actionBarScript.actionList = actionList;
+            actionBarScript.selectedActionIndex = i + 1;
+            actionBarScript.OGButton = this;
+            actionButton.gameObject.transform.SetParent(this.gameObject.transform.parent);
+            actionButton.transform.localScale = new Vector3(3.55071568f, 4.16068888f, 2.02025962f);
+            spawnedActionBars.Add(actionButton);
+        }
 
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         isHovering = true;
-        transform.localScale = new Vector3(2, 13.333334f, 2);
-        transform.position = hoverPosition ;
-;
+        List<string> actionList = null;
+        switch (currentActionType)
+        {
+            case ActionType.basic:
+                actionList = basicActions;
+                break;
+            case ActionType.skill:
+                actionList = skillActions;
+                break;
+            case ActionType.burst:
+                actionList = burstActions;
+                break;
+        }
+        spawnActionBars(actionList);
+
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    public void PointerhasExited()
     {
         isHovering = false;
-        transform.localScale = new Vector3(1.5f, 10, 1.5f);
-        transform.position = originalPosition;
-        
+        foreach (var item in spawnedActionBars)
+        {
+            Destroy(item);
+        }
+
+        spawnedActionBars.Clear();
+
     }
 }

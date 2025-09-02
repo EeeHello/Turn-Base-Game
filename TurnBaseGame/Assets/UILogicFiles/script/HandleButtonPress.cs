@@ -40,6 +40,7 @@ public class HandleButtonPress : MonoBehaviour
     {
         int button = burstAction.GetComponent<HoverScrollButton>().ScrollIndex;
     }
+
     private void CheckkeyboardPress()
     {
         if (Keyboard.current.qKey.wasPressedThisFrame)

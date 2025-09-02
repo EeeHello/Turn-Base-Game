@@ -1,0 +1,93 @@
+{
+    "Username": "111",
+    "SaveSlot": 1,
+    "Weapons": [
+        {
+            "weaponID": "CowBoy Hat",
+            "isEquipped": true,
+            "type": 1,
+            "trust": 0.0,
+            "unlockedBasicActionIDs": [
+                "Hat_Basic_test1",
+                "Hat_Basic_test2",
+                "Hat_Basic_test3"
+            ],
+            "unlockedSkillActionIDs": [
+                "Hat_Skill_test1",
+                "Hat_Skill_test2",
+                "Hat_Skill_test3"
+            ],
+            "unlockedBurstActionID": "Hat_Burst_test1",
+          "selectedBasicActionIDs": [
+            "Hat_Basic_test1",
+            "Hat_Basic_test2",
+            "Hat_Basic_test3"
+          ],
+          "selectedSkillActionIDs": [
+            "Hat_Skill_test1",
+            "Hat_Skill_test2",
+            "Hat_Skill_test3"
+          ],
+            "selectedBurstActionID": "Hat_Burst_test1"
+        },
+        {
+            "weaponID": "magictest",
+            "isEquipped": true,
+            "type": 0,
+            "trust": 0.0,
+            "unlockedBasicActionIDs": [
+                "Magic_Basic_test1",
+                "Magic_Basic_test2",
+                "Magic_Basic_test3"
+            ],
+            "unlockedSkillActionIDs": [
+                "Magic_Skill_test1",
+                "Magic_Skill_test2",
+                "Magic_Skill_test3"
+            ],
+            "unlockedBurstActionID": "Hat_Burst_test1",
+            "selectedBasicActionIDs": [
+                "Magic_Basic_test1"
+            ],
+            "selectedSkillActionIDs": [
+                "Magic_Skill_test1"
+            ],
+            "selectedBurstActionID": "Hat_Burst_test1"
+        },
+        {
+            "weaponID": "swordtest",
+            "isEquipped": true,
+            "type": 0,
+            "trust": 0.0,
+            "unlockedBasicActionIDs": [
+                "Sword_Basic_test1",
+                "Sword_Basic_test2",
+                "Sword_Basic_test3"
+            ],
+            "unlockedSkillActionIDs": [
+                "Sword_Skill_test1",
+                "Sword_Skill_test2",
+                "Sword_Skill_test3"
+            ],
+            "unlockedBurstActionID": "Sword_Burst_test1",
+            "selectedBasicActionIDs": [
+                "Sword_Basic_test1"
+            ],
+            "selectedSkillActionIDs": [
+                "Sword_Skill_test1"
+            ],
+            "selectedBurstActionID": "Sword_Burst_test1"
+        }
+    ],
+    "Abilities": [],
+    "Stats": {
+        "Level": 1,
+        "Health": 100,
+        "PhyAtk": 20,
+        "MagAtk": 30,
+        "PhyDef": 5,
+        "MagDef": 5,
+        "Luck": 5
+    },
+    "Effects": []
+}

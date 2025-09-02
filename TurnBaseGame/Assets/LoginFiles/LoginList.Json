@@ -4,6 +4,11 @@
             "Username": "123",
             "Password": "123",
             "SaveSlotCount": 1
+        },
+        {
+            "Username": "111",
+            "Password": "222",
+            "SaveSlotCount": 1
         }
     ]
 }
