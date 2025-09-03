@@ -271,6 +271,11 @@ MonoBehaviour:
       m_Action: Toggle Role
       m_Flags: 0
     m_Flags: 0
+  maxStamina: 100
+  staminaDrainRate: 10
+  staminaRegenRate: 5
+  currentStamina: 0
+  lowStaminaThreshold: 30
   moveSpeed: 5
 --- !u!1 &794246527 stripped
 GameObject:

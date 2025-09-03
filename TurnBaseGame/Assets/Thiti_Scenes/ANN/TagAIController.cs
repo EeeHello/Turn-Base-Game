@@ -3,13 +3,13 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 [RequireComponent(typeof(Rigidbody))]
 public class TagAIController : MonoBehaviour
 {
-    public enum States {
+    public enum States
+    {
         MoveTowards,
-        MoveAway, 
+        MoveAway,
         StandStill
     }
 
@@ -20,20 +20,29 @@ public class TagAIController : MonoBehaviour
     [Header("Input Settings")]
     public InputAction toggleRoleAction;
 
+    [Header("Stamina Settings")]
+    public float maxStamina = 100f;
+    public float staminaDrainRate = 10f;
+    public float staminaRegenRate = 15f;
+    public float currentStamina;
+    public float lowStaminaThreshold = 30f;
+
     private ANN net;
     private Rigidbody rb;
     public float moveSpeed = 5f;
 
     void Start()
     {
-        net = new ANN(3, 4, 3);
+        net = new ANN(3, 4, 3); // Keep original 3-input architecture
         rb = GetComponent<Rigidbody>();
+        currentStamina = maxStamina;
 
         toggleRoleAction.performed += ctx => ToggleRole();
         toggleRoleAction.Enable();
 
         Debug.Log($"Initialized as {(isChaser ? "CHASER" : "RUNNER")}. Press configured key to toggle role.");
     }
+
     void OnEnable()
     {
         toggleRoleAction?.Enable();
@@ -48,39 +57,52 @@ public class TagAIController : MonoBehaviour
     {
         if (opponent == null) return;
 
-        // Inputs 
+        // Inputs (keep original 3 inputs for ANN)
         Vector3 toOpponent = opponent.position - transform.position;
         toOpponent.y = 0f;
 
-        float distance = Mathf.Clamp01(toOpponent.magnitude / 20f); 
-        float angle = Vector3.Dot(transform.forward.normalized, toOpponent.normalized); 
+        float distance = Mathf.Clamp01(toOpponent.magnitude / 20f);
+        float angle = Vector3.Dot(transform.forward.normalized, toOpponent.normalized);
         float role = isChaser ? 1f : 0f;
 
         List<float> inputs = new List<float> { distance, angle, role };
 
-        // ANN Decision 
+        // ANN Decision (unchanged architecture)
         List<float> outputs = net.Forward(inputs);
         int decision = GetBestAction(outputs);
-        //int decision = outputs.IndexOf(Mathf.Max(outputs.ToArray()));
 
         Debug.Log($"Output count: {outputs.Count}");
-        //Debug.Log($"Outputs: {string.Join(", ", outputs.Select(p => p.ToString("F2")))} Decision: {decision}");
 
         // Rule-based fallback layer
         if (isChaser)
         {
             if (distance < 0.4f) decision = (int)States.MoveTowards;
         }
-        else 
+        else
         {
             if (distance < 0.4f && decision == (int)States.StandStill)
                 decision = (int)States.MoveAway;
         }
 
+        // STAMINA-BASED OVERRIDE (NEW)
+        // If stamina is too low, force StandStill to recover
+        if (currentStamina < lowStaminaThreshold &&
+           (decision == (int)States.MoveTowards || decision == (int)States.MoveAway))
+        {
+            decision = (int)States.StandStill;
+            Debug.Log("Low stamina! Forcing rest.");
+        }
+
         currentState = (States)decision;
 
         Debug.Log($"Outputs: {string.Join(", ", outputs.Select(p => p.ToString("F2")))} Decision: {decision}");
-        Debug.Log($"Outputs: {string.Join(", ", outputs.Select(p => p.ToString("F2")))} Final Decision: {currentState}");
+        Debug.Log($"Final Decision: {currentState}, Stamina: {currentStamina:F1}");
+
+        // Update stamina based on current state
+        UpdateStamina();
+
+        // Apply stamina factor to movement speed
+        float staminaFactor = Mathf.Lerp(0.4f, 1f, currentStamina / maxStamina);
 
         Vector3 move = Vector3.zero;
         switch (currentState)
@@ -99,7 +121,27 @@ public class TagAIController : MonoBehaviour
                 break;
         }
 
-        rb.linearVelocity = move * moveSpeed;
+        rb.linearVelocity = new Vector3(
+            move.x * moveSpeed * staminaFactor,
+            rb.linearVelocity.y,
+            move.z * moveSpeed * staminaFactor
+        );
+    }
+
+    private void UpdateStamina()
+    {
+        // Update stamina based on current action
+        if (currentState == States.MoveTowards || currentState == States.MoveAway)
+        {
+            currentStamina -= staminaDrainRate * Time.fixedDeltaTime;
+        }
+        else
+        {
+            currentStamina += staminaRegenRate * Time.fixedDeltaTime;
+        }
+
+        // Clamp stamina between 0 and max
+        currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
     }
 
     private int GetBestAction(List<float> outputs)
@@ -116,16 +158,34 @@ public class TagAIController : MonoBehaviour
         }
         return bestIndex;
     }
+
     private void ToggleRole()
     {
         isChaser = !isChaser;
         Debug.Log($"Role changed to {(isChaser ? "CHASER" : "RUNNER")}");
     }
 
-    //void OnGUI()
-    //{
-    //    GUI.Label(new Rect(10, 10, 200, 30), $"Role: {(isChaser ? "CHASER" : "RUNNER")}");
-    //    GUI.Label(new Rect(10, 30, 300, 30), $"Press configured key to toggle role");
-    //    GUI.Label(new Rect(10, 50, 200, 30), $"State: {currentState}");
-    //}
+    // Optional: Visual feedback in scene view
+    void OnDrawGizmos()
+    {
+        // Draw stamina bar above agent
+        if (Application.isPlaying)
+        {
+            Vector3 barPosition = transform.position + Vector3.up * 2f;
+            float barWidth = 2f;
+            float barHeight = 0.2f;
+
+            // Background bar
+            Gizmos.color = Color.gray;
+            Gizmos.DrawCube(barPosition, new Vector3(barWidth, barHeight, 0.1f));
+
+            // Stamina fill
+            Gizmos.color = Color.Lerp(Color.red, Color.green, currentStamina / maxStamina);
+            float fillWidth = barWidth * (currentStamina / maxStamina);
+            Gizmos.DrawCube(
+                barPosition - new Vector3((barWidth - fillWidth) / 2f, 0f, 0f),
+                new Vector3(fillWidth, barHeight, 0.1f)
+            );
+        }
+    }
 }
