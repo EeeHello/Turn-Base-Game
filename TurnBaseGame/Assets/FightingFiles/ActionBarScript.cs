@@ -12,7 +12,7 @@ public class ActionBarScript : MonoBehaviour, IPointerExitHandler
     public List<string> actionList;
     public int selectedActionIndex = 0;
     public TMP_FontAsset font;
-    private string actionName;
+    public string actionName;
     public HoverScrollButton OGButton;
 
     public Vector3 spawnPoint;
@@ -63,8 +63,7 @@ public class ActionBarScript : MonoBehaviour, IPointerExitHandler
 
     void Update()
     {
-        actionText.fontSizeMin = fontSizeMin;          // smallest size allowed
-        actionText.fontSizeMax = fontSizeMax;         // largest size allowed
+        actionText.text = actionName;
     }
 
     public void OnPointerExit(PointerEventData eventData)
