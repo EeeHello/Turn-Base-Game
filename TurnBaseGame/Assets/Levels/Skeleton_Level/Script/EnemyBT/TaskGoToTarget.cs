@@ -4,6 +4,7 @@ using BehaviorTree;
 
 public class TaskGoToTarget : Node
 {
+    private ZombieBT zombie;
     private readonly Transform transform;
     private readonly System.Func<Transform> getTarget;
 
@@ -30,7 +31,8 @@ public class TaskGoToTarget : Node
             direction = ObstacleDetector.GetAvoidanceDirection(transform);
         }
 
-        transform.position += direction * ZombieBT.speed * Time.deltaTime;
+        ZombieBT zombie = transform.GetComponent<ZombieBT>();
+        transform.position += direction * zombie.Speed * Time.deltaTime;
 
         if (direction != Vector3.zero)
         {

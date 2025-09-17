@@ -9,6 +9,7 @@ public class PatrolAI : Node
 {
     private Transform transform;
     private Transform[] waypoints;
+    private ZombieBT zombie;
 
     private int currentWaypointIndex = 0;
 
@@ -104,17 +105,18 @@ public class PatrolAI : Node
             bool leftBlocked = ObstacleDetector.IsObstacleLeft(transform, raycastDistance);
             bool rightBlocked = ObstacleDetector.IsObstacleRight(transform, raycastDistance);
 
+            ZombieBT zombie = transform.GetComponent<ZombieBT>();
             if (forwardBlocked)
             {
                 Debug.Log($"[PatrolAI] {transform.name} detected obstacle forward.");
                 if (!leftBlocked)
                 {
-                    transform.position += -transform.right * ZombieBT.speed * Time.deltaTime;
+                    transform.position += -transform.right * zombie.Speed * Time.deltaTime;
                     Debug.Log($"[PatrolAI] {transform.name} sidestepping left.");
                 }
                 else if (!rightBlocked)
                 {
-                    transform.position += transform.right * ZombieBT.speed * Time.deltaTime;
+                    transform.position += transform.right * zombie.Speed * Time.deltaTime;
                     Debug.Log($"[PatrolAI] {transform.name} sidestepping right.");
                 }
                 else
@@ -124,7 +126,7 @@ public class PatrolAI : Node
             }
             else
             {
-                transform.position = Vector3.MoveTowards(transform.position, wp.position, ZombieBT.speed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, wp.position, zombie.Speed * Time.deltaTime);
 
                 if (directionToWP != Vector3.zero)
                 {

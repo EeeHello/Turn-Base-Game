@@ -4,6 +4,7 @@ using BehaviorTree;
 
 public class InvestigatePosition : Node
 {
+    private ZombieBT zombie;
     private readonly Transform transform;
     private readonly System.Func<Vector3?> getLastKnownPosition;
     private readonly System.Action onInvestigationComplete;
@@ -30,11 +31,12 @@ public class InvestigatePosition : Node
 
         Vector3 targetPos = lastKnown.Value;
 
+        ZombieBT zombie = transform.GetComponent<ZombieBT>();
         if (!arrived)
         {
             if (Vector3.Distance(transform.position, targetPos) > 0.4f)
             {
-                transform.position = Vector3.MoveTowards(transform.position, targetPos, ZombieBT.speed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, targetPos, zombie.Speed * Time.deltaTime);
 
                 Vector3 direction = targetPos - transform.position;
                 direction.y = 0f;
