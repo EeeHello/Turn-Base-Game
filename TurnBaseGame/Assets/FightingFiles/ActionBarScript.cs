@@ -20,6 +20,8 @@ public class ActionBarScript : MonoBehaviour, IPointerExitHandler
 
     public int fontSizeMin = 1;
     public int fontSizeMax = 36;
+
+    public bool animating = false;
     void Start()
     {
         this.transform.position = spawnPoint;
@@ -48,7 +50,6 @@ public class ActionBarScript : MonoBehaviour, IPointerExitHandler
             rect.anchorMax = new Vector2(0.9f, 0.6f);
             rect.offsetMin = Vector2.zero;
             rect.offsetMax = Vector2.zero;
-            rect.rotation = new Quaternion(0,0,25,1);
         }
 
         // Apply font and text
@@ -58,7 +59,11 @@ public class ActionBarScript : MonoBehaviour, IPointerExitHandler
         actionText.enableAutoSizing = true;   // scale font to fit
         actionText.fontSizeMin = fontSizeMin;          // smallest size allowed
         actionText.fontSizeMax = fontSizeMax;         // largest size allowed
-        actionText.color = Color.black;       // adjust for contrast
+        actionText.colorGradient = new VertexGradient(Color.white, Color.black, Color.aliceBlue, Color.indianRed);
+        actionText.transform.localRotation = new Quaternion(0, 0, 0.216439605f, 0.976296067f);
+
+
+
     }
 
     void Update()
@@ -68,6 +73,7 @@ public class ActionBarScript : MonoBehaviour, IPointerExitHandler
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (animating) return;
         OGButton.PointerhasExited();
     }
 }

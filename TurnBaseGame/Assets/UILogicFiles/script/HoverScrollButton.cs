@@ -76,7 +76,7 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler
     private int currentWeaponIndex = 0;
 
     [Header("Animation")]
-    public float animationDuration = 999f;
+    public float animationDuration ;
     public float offsetDistance = 100f; // how far to the left newAction starts
     public Vector3 defaultScale = Vector3.one; // editable in inspector
 
@@ -208,18 +208,14 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler
 
         if (spawnedActionBars.Count == 0)
         {
-            //2.make original button disappear
             this.GetComponent<Image>().enabled = false;
 
-            //3.spawn new button
             SpawnActionBar(actionList, ScrollIndex);
         }
         else
         {
-            //1.spawn new button
             SpawnActionBar(actionList, ScrollIndex);
 
-            //2.animate curent button
             AnimateButton(spawnedActionBars);
         }
     }
@@ -231,14 +227,16 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler
         GameObject oldAction = spawnedActionBars[0];
         GameObject newAction = spawnedActionBars[1];
 
+        oldAction.GetComponent<ActionBarScript>().animating = true;
+        newAction.GetComponent<ActionBarScript>().animating = true;
         RectTransform oldRect = oldAction.GetComponent<RectTransform>();
         RectTransform newRect = newAction.GetComponent<RectTransform>();
 
-        // Starting position of newAction = slightly left of oldAction
-        Vector3 startPos = oldRect.position + (-oldRect.right * offsetDistance);
-        Vector3 targetPos = oldRect.position;
+        // Use localPosition consistently
+        Vector3 startPos = oldRect.localPosition + (-oldRect.right * offsetDistance);
+        Vector3 targetPos = oldRect.localPosition;
 
-        newRect.position = startPos;
+        newRect.localPosition = startPos;
 
         // Make newAction transparent
         CanvasGroup newGroup = newAction.GetComponent<CanvasGroup>();
@@ -251,42 +249,44 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler
         oldGroup.alpha = 1f;
 
         // Start coroutine
-        StartCoroutine(AnimateTransition(oldAction, oldRect, oldGroup, newRect, newGroup, targetPos));
+        StartCoroutine(AnimateTransition(oldAction, newAction, oldRect, oldGroup, newRect, newGroup, targetPos));
     }
 
-    private IEnumerator AnimateTransition(GameObject oldAction,
-                                          RectTransform oldRect, CanvasGroup oldGroup,
-                                          RectTransform newRect, CanvasGroup newGroup,
-                                          Vector3 targetPos)
+
+    private IEnumerator AnimateTransition(GameObject oldAction, GameObject newAction,
+                                       RectTransform oldRect, CanvasGroup oldGroup,
+                                       RectTransform newRect, CanvasGroup newGroup,
+                                       Vector3 targetPos)
     {
+        Debug.Log("Coroutine started");
+
         float elapsed = 0f;
-        Vector3 oldStart = oldRect != null ? oldRect.position : Vector3.zero;
-        Vector3 newStart = newRect != null ? newRect.position : Vector3.zero;
+        float duration = animationDuration /*0.5f*/;
 
-        while (elapsed < animationDuration)
+        Vector3 oldStartPos = oldRect.localPosition;
+        Vector3 newStartPos = newRect.localPosition;
+
+        while (elapsed < duration)
         {
-            if (oldRect == null || newRect == null) yield break;
-
-            float t = elapsed / animationDuration;
-            float smoothT = Mathf.SmoothStep(0, 1, t);
-
-            // Move positions
-            oldRect.position = Vector3.Lerp(oldStart, targetPos, smoothT);
-            newRect.position = Vector3.Lerp(newStart, targetPos, smoothT);
-
-            // Fade
-            oldGroup.alpha = Mathf.Lerp(1f, 0f, smoothT);
-            newGroup.alpha = Mathf.Lerp(0f, 1f, smoothT);
-
             elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+
+            if (oldRect != null)
+                oldRect.localPosition = Vector3.Lerp(oldStartPos, targetPos, t);
+            if (newRect != null)
+                newRect.localPosition = Vector3.Lerp(newStartPos, targetPos, t);
+
+            if (oldGroup != null)
+                oldGroup.alpha = Mathf.Lerp(1, 0, t);
+            if (newGroup != null)
+                newGroup.alpha = Mathf.Lerp(0, 1, t);
+
+            Debug.Log($"Animating... t={t}");
             yield return null;
         }
 
-        if (oldRect != null) oldRect.position = targetPos;
-        if (newRect != null) newRect.position = targetPos;
-
-        if (oldGroup != null) oldGroup.alpha = 0f;
-        if (newGroup != null) newGroup.alpha = 1f;
+        Debug.Log("Coroutine finished");
+        newAction.GetComponent<ActionBarScript>().animating = false;
 
         if (spawnedActionBars.Count > 0 && spawnedActionBars[0] == oldAction)
         {
@@ -294,6 +294,9 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler
             Destroy(oldAction);
         }
     }
+
+
+
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -319,7 +322,7 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler
         isHovering = false;
         this.GetComponent<Image>().enabled = true;
 
-        StopAllCoroutines(); // prevent animations from updating destroyed objects
+        //StopAllCoroutines(); // prevent animations from updating destroyed objects
 
         foreach (var item in spawnedActionBars)
         {
@@ -327,5 +330,6 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler
         }
 
         spawnedActionBars.Clear();
+        Debug.Log("Deleted Actions");
     }
 }

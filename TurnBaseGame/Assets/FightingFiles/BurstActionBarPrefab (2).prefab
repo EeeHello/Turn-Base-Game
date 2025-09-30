@@ -90,5 +90,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionList: []
   selectedActionIndex: 0
-  font: {fileID: 11400000, guid: fd0a9d7f3d5a52444a999a96a0b670c7, type: 2}
+  font: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  actionName: 
+  OGButton: {fileID: 0}
   spawnPoint: {x: 1764, y: 493.7, z: 0}
+  fontSizeMin: 1
+  fontSizeMax: 36

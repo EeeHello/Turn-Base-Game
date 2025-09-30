@@ -2361,6 +2361,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 554411007851258899, guid: 7382afa1f25c3fd47ac3fb84cfd67724, type: 3}
     - target: {fileID: 322132350701426357, guid: 0795a2f95bef2b344b1856580203355c, type: 3}
+      propertyPath: animationDuration
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 322132350701426357, guid: 0795a2f95bef2b344b1856580203355c, type: 3}
       propertyPath: currentActionType
       value: 1
       objectReference: {fileID: 0}
@@ -2368,6 +2372,10 @@ PrefabInstance:
       propertyPath: ButtonPrefab
       value: 
       objectReference: {fileID: 5702471592794499385, guid: fc2ba5f470dd83d41a4341913057be26, type: 3}
+    - target: {fileID: 679049636373949111, guid: 0795a2f95bef2b344b1856580203355c, type: 3}
+      propertyPath: animationDuration
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 679049636373949111, guid: 0795a2f95bef2b344b1856580203355c, type: 3}
       propertyPath: currentActionType
       value: 2
@@ -2480,6 +2488,10 @@ PrefabInstance:
       propertyPath: ButtonPrefab
       value: 
       objectReference: {fileID: 5575897672859191666, guid: e26b3aac0b17d164681663ac9a613ac4, type: 3}
+    - target: {fileID: 1740298758165822071, guid: 0795a2f95bef2b344b1856580203355c, type: 3}
+      propertyPath: animationDuration
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 1757883532758628741, guid: 0795a2f95bef2b344b1856580203355c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
