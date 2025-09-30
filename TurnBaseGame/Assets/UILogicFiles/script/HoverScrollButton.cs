@@ -76,7 +76,7 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler
     private int currentWeaponIndex = 0;
 
     [Header("Animation")]
-    public float animationDuration ;
+    public float animationDuration;
     public float offsetDistance = 100f; // how far to the left newAction starts
     public Vector3 defaultScale = Vector3.one; // editable in inspector
 
@@ -258,18 +258,16 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler
                                        RectTransform newRect, CanvasGroup newGroup,
                                        Vector3 targetPos)
     {
-        Debug.Log("Coroutine started");
 
         float elapsed = 0f;
-        float duration = animationDuration /*0.5f*/;
 
         Vector3 oldStartPos = oldRect.localPosition;
         Vector3 newStartPos = newRect.localPosition;
 
-        while (elapsed < duration)
+        while (elapsed < animationDuration)
         {
             elapsed += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsed / duration);
+            float t = Mathf.Clamp01(elapsed / animationDuration);
 
             if (oldRect != null)
                 oldRect.localPosition = Vector3.Lerp(oldStartPos, targetPos, t);
@@ -281,22 +279,32 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler
             if (newGroup != null)
                 newGroup.alpha = Mathf.Lerp(0, 1, t);
 
-            Debug.Log($"Animating... t={t}");
             yield return null;
         }
 
-        Debug.Log("Coroutine finished");
-        newAction.GetComponent<ActionBarScript>().animating = false;
-
-        if (spawnedActionBars.Count > 0 && spawnedActionBars[0] == oldAction)
+        if (newAction != null)
         {
-            spawnedActionBars.RemoveAt(0);
+            newAction.GetComponent<ActionBarScript>().animating = false;
+        }
+
+        if (spawnedActionBars.Contains(oldAction))
+        {
+            spawnedActionBars.Remove(oldAction);
             Destroy(oldAction);
         }
+
+        // Extra safety: if more than 1 left in the list, keep only the latest (newAction)
+        for (int i = spawnedActionBars.Count - 1; i >= 0; i--)
+        {
+            if (spawnedActionBars[i] != newAction)
+            {
+                Destroy(spawnedActionBars[i]);
+                spawnedActionBars.RemoveAt(i);
+            }
+        }
+
+
     }
-
-
-
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -314,6 +322,7 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler
                 actionList = burstActions;
                 break;
         }
+        CloseAllHoverButtons();
         AnimateToNewAction(actionList);
     }
 
@@ -322,14 +331,24 @@ public class HoverScrollButton : MonoBehaviour, IPointerEnterHandler
         isHovering = false;
         this.GetComponent<Image>().enabled = true;
 
-        //StopAllCoroutines(); // prevent animations from updating destroyed objects
-
         foreach (var item in spawnedActionBars)
         {
             if (item != null) Destroy(item);
         }
 
         spawnedActionBars.Clear();
-        Debug.Log("Deleted Actions");
     }
+
+    public void CloseAllHoverButtons()
+    {
+        HoverScrollButton[] buttons = FindObjectsOfType<HoverScrollButton>();
+        foreach (HoverScrollButton btn in buttons)
+        {
+            if (btn != this)
+            {
+                btn.PointerhasExited();
+            }
+        }
+    }
+
 }
