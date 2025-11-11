@@ -5,23 +5,34 @@ using UnityEngine;
 
 public class FightDataManager : MonoBehaviour
 {
-    public List<PlayerData>  allPlayerssData;
+    public List<PlayerData> allPlayerssData;
+    public List<Stats> allEnemiesData = new List<Stats>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        PlayerRuntime[] playerRuntimes =  FindObjectsOfType<PlayerRuntime>();
+        // Gather all players' runtime data
+        PlayerRuntime[] playerRuntimes = FindObjectsOfType<PlayerRuntime>();
         foreach (var item in playerRuntimes)
         {
             allPlayerssData.Add(item.data);
+        }
+
+        // Grab enemy stats
+        EnemyRuntime[] enemyRuntimes = FindObjectsOfType<EnemyRuntime>();
+        foreach (var item in enemyRuntimes)
+        {
+            allEnemiesData.Add(item.stats);            
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
+
+    // === PLAYER DATA MANAGEMENT ===
 
     public PlayerData FetchMyPlayersData(GameObject Player)
     {
@@ -60,22 +71,22 @@ public class FightDataManager : MonoBehaviour
         List<string> sActions = new List<string>();
         List<string> buAction = new List<string>();
 
-    
-            foreach (var action in weapon.selectedBasicActionIDs)
-            {
-                bActions.Add(action);
-            }
 
-            foreach (var action in weapon.selectedSkillActionIDs)
-            {
-                sActions.Add(action);
-            }
+        foreach (var action in weapon.selectedBasicActionIDs)
+        {
+            bActions.Add(action);
+        }
 
-            buAction.Add(weapon.selectedBurstActionID);
+        foreach (var action in weapon.selectedSkillActionIDs)
+        {
+            sActions.Add(action);
+        }
 
-        
+        buAction.Add(weapon.selectedBurstActionID);
 
-        return new List<List<string>> { bActions, sActions, buAction};
+
+
+        return new List<List<string>> { bActions, sActions, buAction };
     }
 
     public WeaponInventoryEntry GiveActiveWeapon(int directionOfSwitch, PlayerData pd, WeaponInventoryEntry currentWeapon)
@@ -91,10 +102,10 @@ public class FightDataManager : MonoBehaviour
                     default:
                         weaponIndex = i + directionOfSwitch;
                         break;
-                    case <0:
+                    case < 0:
                         weaponIndex = 2;
                         break;
-                    case >2:
+                    case > 2:
                         weaponIndex = 0;
                         break;
                 }
@@ -104,4 +115,35 @@ public class FightDataManager : MonoBehaviour
         return currentWeapon;
     }
 
+
+
+    // === ENEMY DATA MANAGEMENT ===
+    public List<Stats> FetchAllEnemiesData()
+    {
+        return allEnemiesData;
+    }
+
+    public Stats FetchEnemyData(int index)
+    {
+        if (index < 0 || index >= allEnemiesData.Count) return null;
+        return allEnemiesData[index];
+    }
+
+    public void AddEnemyData(Stats enemyStats)
+    {
+        allEnemiesData.Add(enemyStats);
+        if (EnemyDataCarrier.Instance != null)
+        {
+            EnemyDataCarrier.Instance.LoadedEnemyStatsList.Add(enemyStats);
+        }
+    }
+
+    public void ClearEnemyData()
+    {
+        allEnemiesData.Clear();
+        if (EnemyDataCarrier.Instance != null)
+        {
+            EnemyDataCarrier.Instance.LoadedEnemyStatsList.Clear();
+        }
+    }
 }

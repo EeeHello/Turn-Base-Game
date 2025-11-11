@@ -624,6 +624,8 @@ MonoBehaviour:
     PhyDef: 0
     MagDef: 0
     Luck: 0
+  extraEnemies:
+  - {fileID: 342246047}
 --- !u!1001 &372685367
 PrefabInstance:
   m_ObjectHideFlags: 0
